@@ -1,0 +1,470 @@
+﻿Der Buildvorgang wurde am 11.02.2016 21:34:10 gestartet.
+     1>Projekt "D:\Documents\VS 2015\Simple_Game_Engine\Simple_Game_Engine\Simple_Game_Engine.vcxproj" auf Knoten "2", Build Ziel(e).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"D:\Documents\VS 2015\BulletPhysicsEngine\src" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Source\AnimatedModel.cpp Source\Application.cpp Source\ModelManager.cpp Source\PBStaticModel.cpp Source\SceneWorldData.cpp Source\ShaderManager.cpp Source\System.cpp Source\Terrain.cpp Source\main.cpp
+         AnimatedModel.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(285): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(297): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(325): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(337): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(365): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(377): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(406): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(418): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(446): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(458): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(486): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(498): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(526): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(538): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(566): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(578): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(626): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(634): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(642): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(650): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(658): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(666): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(674): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(682): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(694): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(705): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(716): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(727): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(738): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(749): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(760): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(771): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(962): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1005): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1041): warning C4018: ">=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1198): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1230): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1287): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1312): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1458): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1503): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>Source\AnimatedModel.cpp(125): warning C4244: "Argument": Konvertierung von "wchar_t" in "char", möglicher Datenverlust
+     1>Source\AnimatedModel.cpp(200): warning C4244: "Argument": Konvertierung von "wchar_t" in "char", möglicher Datenverlust
+     1>Source\AnimatedModel.cpp(295): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\AnimatedModel.cpp(342): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\AnimatedModel.cpp(387): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\AnimatedModel.cpp(407): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>Source\AnimatedModel.cpp(73): warning C4101: "hr": Unreferenzierte lokale Variable
+     1>Source\AnimatedModel.cpp(548): warning C4244: "Argument": Konvertierung von "wchar_t" in "char", möglicher Datenverlust
+     1>Source\AnimatedModel.cpp(636): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\AnimatedModel.cpp(762): warning C4244: "Initialisierung": Konvertierung von "float" in "int", möglicher Datenverlust
+     1>Source\AnimatedModel.cpp(800): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\AnimatedModel.cpp(851): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+         Application.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(285): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(297): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(325): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(337): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(365): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(377): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(406): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(418): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(446): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(458): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(486): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(498): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(526): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(538): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(566): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(578): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(626): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(634): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(642): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(650): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(658): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(666): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(674): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(682): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(694): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(705): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(716): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(727): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(738): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(749): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(760): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(771): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(962): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1005): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1041): warning C4018: ">=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1198): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1230): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1287): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1312): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1458): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1503): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(266): warning C4305: "Argument": Verkürzung von "double" in "const btScalar"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(271): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(362): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(380): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(398): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(416): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(469): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(506): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(544): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(602): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(622): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(624): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(673): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(680): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(683): warning C4244: "Argument": Konvertierung von "float" in "long", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(723): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(739): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(740): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(741): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>Source\Application.cpp(208): warning C4305: "Argument": Verkürzung von "double" in "float"
+     1>Source\Application.cpp(240): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>Source\Application.cpp(244): warning C4305: "=": Verkürzung von "double" in "float"
+     1>Source\Application.cpp(366): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
+     1>Source\Application.cpp(448): warning C4305: "Initialisierung": Verkürzung von "double" in "float"
+     1>Source\Application.cpp(452): warning C4305: "=": Verkürzung von "double" in "float"
+     1>Source\Application.cpp(622): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\Application.cpp(809): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\Application.cpp(910): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+         ModelManager.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(285): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(297): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(325): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(337): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(365): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(377): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(406): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(418): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(446): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(458): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(486): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(498): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(526): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(538): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(566): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(578): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(626): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(634): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(642): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(650): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(658): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(666): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(674): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(682): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(694): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(705): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(716): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(727): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(738): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(749): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(760): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(771): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(962): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1005): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1041): warning C4018: ">=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1198): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1230): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1287): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1312): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1458): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1503): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>Source\ModelManager.cpp(15): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\ModelManager.cpp(20): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\ModelManager.cpp(25): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\ModelManager.cpp(35): warning C4129: "m": nicht erkannte Folge von Escapesequenz
+     1>Source\ModelManager.cpp(35): warning C4129: "T": nicht erkannte Folge von Escapesequenz
+     1>Source\ModelManager.cpp(49): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\ModelManager.cpp(75): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+         PBStaticModel.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(285): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(297): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(325): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(337): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(365): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(377): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(406): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(418): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(446): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(458): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(486): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(498): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(526): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(538): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(566): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(578): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(626): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(634): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(642): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(650): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(658): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(666): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(674): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(682): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(694): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(705): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(716): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(727): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(738): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(749): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(760): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(771): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(962): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1005): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1041): warning C4018: ">=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1198): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1230): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1287): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1312): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1458): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1503): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+         SceneWorldData.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(285): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(297): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(325): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(337): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(365): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(377): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(406): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(418): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(446): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(458): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(486): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(498): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(526): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(538): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(566): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(578): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(626): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(634): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(642): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(650): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(658): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(666): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(674): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(682): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(694): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(705): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(716): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(727): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(738): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(749): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(760): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(771): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(962): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1005): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1041): warning C4018: ">=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1198): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1230): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1287): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1312): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1458): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1503): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(266): warning C4305: "Argument": Verkürzung von "double" in "const btScalar"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(271): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(362): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(380): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(398): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(416): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(469): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(506): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(544): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(602): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(622): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(624): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(673): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(680): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(683): warning C4244: "Argument": Konvertierung von "float" in "long", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(723): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(739): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(740): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(741): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>Source\SceneWorldData.cpp(402): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\SceneWorldData.cpp(447): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\SceneWorldData.cpp(463): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>Source\SceneWorldData.cpp(597): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+         ShaderManager.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(285): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(297): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(325): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(337): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(365): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(377): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(406): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(418): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(446): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(458): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(486): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(498): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(526): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(538): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(566): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(578): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(626): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(634): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(642): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(650): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(658): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(666): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(674): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(682): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(694): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(705): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(716): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(727): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(738): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(749): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(760): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(771): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(962): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1005): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1041): warning C4018: ">=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1198): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1230): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1287): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1312): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1458): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1503): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(266): warning C4305: "Argument": Verkürzung von "double" in "const btScalar"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(271): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(362): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(380): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(398): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(416): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(469): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(506): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(544): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(602): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(622): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(624): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(673): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(680): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(683): warning C4244: "Argument": Konvertierung von "float" in "long", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(723): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(739): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(740): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(741): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>Source\ShaderManager.cpp(113): warning C4800: "HRESULT": Variable wird auf booleschen Wert ("True" oder "False") gesetzt (Auswirkungen auf Leistungsverhalten möglich)
+     1>Source\ShaderManager.cpp(128): warning C4800: "HRESULT": Variable wird auf booleschen Wert ("True" oder "False") gesetzt (Auswirkungen auf Leistungsverhalten möglich)
+     1>Source\ShaderManager.cpp(143): warning C4800: "HRESULT": Variable wird auf booleschen Wert ("True" oder "False") gesetzt (Auswirkungen auf Leistungsverhalten möglich)
+     1>Source\ShaderManager.cpp(158): warning C4800: "HRESULT": Variable wird auf booleschen Wert ("True" oder "False") gesetzt (Auswirkungen auf Leistungsverhalten möglich)
+         System.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(266): warning C4305: "Argument": Verkürzung von "double" in "const btScalar"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(362): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(380): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(398): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(416): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(624): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(683): warning C4244: "Argument": Konvertierung von "float" in "long", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(739): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(740): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(741): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+         Terrain.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(285): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(297): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(325): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(337): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(365): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(377): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(406): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(418): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(446): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(458): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(486): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(498): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(526): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(538): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(566): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(578): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(626): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(634): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(642): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(650): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(658): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(666): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(674): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(682): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(694): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(705): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(716): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(727): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(738): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(749): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(760): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(771): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(962): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1005): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1041): warning C4018: ">=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1198): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1230): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1287): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1312): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1458): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\ConfigDataClass.h(1503): warning C4018: "<=": Konflikt zwischen "signed" und "unsigned"
+         main.cpp
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(266): warning C4305: "Argument": Verkürzung von "double" in "const btScalar"
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(362): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(380): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(398): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(416): warning C4244: "Argument": Konvertierung von "double" in "const btScalar", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(624): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(683): warning C4244: "Argument": Konvertierung von "float" in "long", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(739): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(740): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+     1>d:\documents\vs 2015\simple_game_engine\simple_game_engine\source\PhysicWorld.h(741): warning C4244: "=": Konvertierung von "HACD::Real" in "float", möglicher Datenverlust
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\VS 2015\Simple_Game_Engine\Release\Simple_Game_Engine.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"D:\Documents\VS 2015\BulletPhysicsEngine\lib\Release" d3d11.lib D3DCompiler.lib dxgi.lib d2d1.lib dwrite.lib BulletCollision.lib BulletDynamics.lib Bullet3Geometry.lib Bullet3Common.lib ConvexDecomposition.lib HACD.lib LinearMath.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Documents\VS 2015\Simple_Game_Engine\Release\Simple_Game_Engine.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\VS 2015\Simple_Game_Engine\Release\Simple_Game_Engine.lib" /MACHINE:X86 /SAFESEH Release\AnimatedModel.obj
+         Release\Application.obj
+         Release\Bitmap.obj
+         Release\Camera.obj
+         Release\CapsuleLightShader.obj
+         Release\ConfigDataClass.obj
+         Release\CPUPerformance.obj
+         Release\D3D.obj
+         Release\DDSTextureLoader.obj
+         Release\ScreenGrab.obj
+         Release\DeferredBuffer.obj
+         Release\DeferredShader.obj
+         Release\DirectionalLightShader.obj
+         Release\FPSTimer.obj
+         Release\GBufferDebuggingShader.obj
+         Release\IBLShader.obj
+         Release\LightManager.obj
+         Release\main.obj
+         Release\mapclass.obj
+         Release\MaterialManager.obj
+         Release\ModelManager.obj
+         Release\PBStaticModel.obj
+         Release\PointContacts.obj
+         Release\PointForceGenerator.obj
+         Release\PointForceRegistry.obj
+         Release\PointLightShader.obj
+         Release\PointPhysic.obj
+         Release\PointWorld.obj
+         Release\RigidBody.obj
+         Release\RigidBodyForceGenerator.obj
+         Release\RigidBodyForceRegistry.obj
+         Release\ShaderManager.obj
+         Release\SkyBoxShader.obj
+         Release\SpotLightShader.obj
+         Release\StateManager.obj
+         Release\System.obj
+         Release\Terrain.obj
+         Release\Texture.obj
+         Release\TextureManager.obj
+         Release\TextureShader.obj
+         Release\Timer.obj
+         Release\UserInput.obj
+         Release\UserInterface.obj
+         Release\SceneWorldData.obj
+         Release\PhysicWorld.obj
+         Code wird generiert.
+         647 of 5715 functions (11.3%) were compiled, the rest were copied from previous compilation.
+           373 functions were new in current compilation
+           176 functions had inline decision re-evaluated but remain unchanged
+         Codegenerierung ist abgeschlossen.
+         Simple_Game_Engine.vcxproj -> D:\Documents\VS 2015\Simple_Game_Engine\Release\Simple_Game_Engine.exe
+     1>Die Erstellung von Projekt "D:\Documents\VS 2015\Simple_Game_Engine\Simple_Game_Engine\Simple_Game_Engine.vcxproj" ist abgeschlossen (Build Ziel(e)).
+
+Der Buildvorgang wurde erfolgreich ausgeführt.
+
+Verstrichene Zeit 00:00:31.08

@@ -1,0 +1,8 @@
+#Material File for terrain
+[terrainMat]
+albedo_map = "data/terrain/dirt.dds"
+roughness_map = "data/terrain/dirt_roughness.dds"
+metalness_map = "data/terrain/black.dds"
+f0 = 0.06
+render_forward = false
+has_normal_map = false

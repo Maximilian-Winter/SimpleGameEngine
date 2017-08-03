@@ -1,0 +1,7 @@
+[Cerberus01]
+albedo_map = "data/models/Cerberus_A.dds"
+roughness_map = "data/models/Cerberus_R.dds"
+metalness_map = "data/models/Cerberus_M.dds"
+normal_map = "data/models/Cerberus_N.dds"
+f0 = 0.06
+render_forward = 1

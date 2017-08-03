@@ -1,0 +1,10 @@
+
+[Barrel01]
+f0 = 0.06
+render_forward = false
+is_transparent = 0
+transparency = 0.5
+albedo_map = "data/models/BarrelA.dds"
+roughness_map = "data/models/BarrelR.dds"
+metalness_map = "data/models/BarrelM.dds"
+normal_map = "data/models/BarrelN.dds"

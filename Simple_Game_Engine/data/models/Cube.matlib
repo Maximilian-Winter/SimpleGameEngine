@@ -1,0 +1,12 @@
+#SMO Converter
+
+[Cube01]
+f0 = 0.06
+render_forward = 0
+is_transparent = 0
+use_alphachannel_transparency = 0
+albedo_map = "data/models/Concrete_basecolor.dds"
+roughness_map = "data/models/Concrete_roughness.dds"
+metalness_map = "data/models/Concrete_metallic.dds"
+normal_map = ""data/models/Concrete_normal.dds""
+

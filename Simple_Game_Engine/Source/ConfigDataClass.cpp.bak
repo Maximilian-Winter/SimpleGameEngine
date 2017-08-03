@@ -1,0 +1,1390 @@
+////////////////////////////////////////////////////////////////////////////////
+// Filename: ConfigDataClass.cpp
+////////////////////////////////////////////////////////////////////////////////
+#include "ConfigDataClass.h"
+
+
+ConfigDataClass::ConfigDataClass()
+{
+	ConfigData.ConfigSections.clear();
+}
+
+
+ConfigDataClass::ConfigDataClass(const ConfigDataClass& other)
+{
+}
+
+
+ConfigDataClass::~ConfigDataClass()
+{
+}
+
+
+bool ConfigDataClass::LoadConfigDataFile(const std::string FileName)
+{
+	//Clear the vector with the Config Data
+	ConfigData.ConfigSections.clear();
+	std::ifstream InputFile(FileName);
+	std::string InputStr;
+
+	if (InputFile.good())
+	{
+		Section TempSection;
+		bool IsValidFile = false;
+
+		while (!InputFile.eof())
+		{
+			//Start to read in the Data from the File
+			std::getline(InputFile, InputStr);
+			RemoveCommentFromLine(InputStr);
+
+			if (!IsOnlyWhitespacesLine(InputStr))
+			{
+				if (IsSectionNameLine(InputStr))
+				{
+					if (IsValidFile)											//Check if already a section is loaded
+					{	
+						ConfigData.ConfigSections.push_back(TempSection);		//Push the last section back into the vector and clear the temp section for a new one 
+						TempSection.IntVals.clear();
+						TempSection.IntVectors.clear();
+						TempSection.FloatVals.clear();
+						TempSection.FloatVectors.clear();
+						TempSection.BoolVals.clear();
+						TempSection.BoolVectors.clear();
+						TempSection.StringVals.clear();
+						TempSection.StringVectors.clear();
+						TempSection.SectionName = "";
+					}
+					std::string SectionName = GetSectionNameFromLine(InputStr);
+
+					TempSection.SectionName = SectionName;
+					IsValidFile = true;
+				}
+
+				if (IsValueLine(InputStr))
+				{
+					std::string ValueName = GetValueNameFromLine(InputStr);
+					
+
+					if (IsIntValueLine(InputStr))
+					{
+						int Value = GetIntValueFromLine(InputStr);
+						
+						IntValue TempValue(ValueName, Value);
+						TempSection.IntVals.push_back(TempValue);
+					}
+
+					if (IsFloatValueLine(InputStr))
+					{
+						float Value = GetFloatValueFromLine(InputStr);
+						
+						FloatValue TempValue(ValueName, Value);
+						TempSection.FloatVals.push_back(TempValue);
+					}
+
+					if (IsBoolValueLine(InputStr))
+					{
+						bool Value = GetBoolValueFromLine(InputStr);
+						
+						BoolValue TempValue(ValueName, Value);
+						TempSection.BoolVals.push_back(TempValue);
+					}
+
+					if (IsStringValueLine(InputStr))
+					{
+						std::string Value = GetStringValueFromLine(InputStr);
+						
+						StringValue TempValue(ValueName, Value);
+						TempSection.StringVals.push_back(TempValue);
+					}
+
+					if (IsIntVectorLine(InputStr))
+					{
+						std::vector<int> Value = GetIntVectorFromLine(InputStr);
+
+						IntVector TempValue(ValueName, Value);
+						TempSection.IntVectors.push_back(TempValue);
+					}
+
+					if (IsFloatVectorLine(InputStr))
+					{
+						std::vector<float> Value = GetFloatVectorFromLine(InputStr);
+
+						FloatVector TempValue(ValueName, Value);
+						TempSection.FloatVectors.push_back(TempValue);
+					}
+					
+					if (IsBoolVectorLine(InputStr))
+					{
+						std::vector<bool> Value = GetBoolVectorFromLine(InputStr);
+
+						BoolVector TempValue(ValueName, Value);
+						TempSection.BoolVectors.push_back(TempValue);
+					}
+
+					if (IsStringVectorLine(InputStr))
+					{
+						std::vector<std::string> Value = GetStringVectorFromLine(InputStr);
+
+						StringVector TempValue(ValueName, Value);
+						TempSection.StringVectors.push_back(TempValue);
+					}
+				}
+
+			}
+
+		}
+
+		if (IsValidFile)												//Check if already a section is loaded
+		{
+			ConfigData.ConfigSections.push_back(TempSection);			//Push the last section back into the vector and clear the temp section
+			TempSection.IntVals.clear();
+			TempSection.IntVectors.clear();
+			TempSection.FloatVals.clear();
+			TempSection.FloatVectors.clear();
+			TempSection.BoolVals.clear();
+			TempSection.BoolVectors.clear();
+			TempSection.StringVals.clear();
+			TempSection.StringVectors.clear();
+			TempSection.SectionName = "";
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+void ConfigDataClass::SaveConfigDataFile(const std::string FileName)
+{
+	std::ofstream fileOutput;
+	fileOutput.open(FileName);
+
+	for (int k = 0; k < this->GetNumberOfSections(); k++)
+	{
+		std::string SectionName;
+		this->GetSectionName(k, SectionName);
+
+		fileOutput << std::endl;
+		fileOutput << "[" << SectionName << "]" << std::endl;
+
+		for (int i = 0; i < this->GetNumberOfIntValues(k); i++)
+		{
+			int Val;
+			std::string ValName;
+			this->GetIntValueNameByIndex(k, i, ValName);
+			this->GetIntValueByIndex(k, i, Val);
+
+			fileOutput << ValName << " = " << Val << std::endl;
+		}
+
+		for (int i = 0; i < this->GetNumberOfFloatValues(k); i++)
+		{
+			float Val;
+			std::string ValName;
+			this->GetFloatValueNameByIndex(k, i, ValName);
+			this->GetFloatValueByIndex(k, i, Val);
+
+			fileOutput << ValName << " = " << Val << std::endl;
+		}
+
+		for (int i = 0; i < this->GetNumberOfBoolValues(k); i++)
+		{
+			bool Val;
+			std::string ValName;
+			this->GetBoolValueNameByIndex(k, i, ValName);
+			this->GetBoolValueByIndex(k, i, Val);
+
+			fileOutput << ValName << " = " << Val << std::endl;
+		}
+
+		for (int i = 0; i < this->GetNumberOfStringValues(k); i++)
+		{
+			std::string Val;
+			std::string ValName;
+			this->GetStringValueNameByIndex(k, i, ValName);
+			this->GetStringValueByIndex(k, i, Val);
+
+		
+			fileOutput << ValName << " = \"" << Val << "\"" << std::endl;
+		}
+
+		for (int i = 0; i < this->GetNumberOfIntVectors(k); i++)
+		{
+			std::vector<int> Val;
+			std::string ValName;
+			this->GetIntVectorNameByIndex(k, i, ValName);
+			this->GetIntVectorByIndex(k, i, Val);
+
+			fileOutput << ValName << " = { ";
+			for (int t = 0; t < Val.size(); t++)
+			{
+				if (t == Val.size() - 1)
+				{
+					fileOutput << Val[t];
+				}
+				else
+				{
+					fileOutput << Val[t] <<", ";
+				}
+			}
+			fileOutput << " }" << std::endl;
+
+		}
+
+		for (int i = 0; i < this->GetNumberOfFloatVectors(k); i++)
+		{
+			std::vector<float> Val;
+			std::string ValName;
+			this->GetFloatVectorNameByIndex(k, i, ValName);
+			this->GetFloatVectorByIndex(k, i, Val);
+
+			fileOutput << ValName << " = { ";
+			for (int t = 0; t < Val.size(); t++)
+			{
+				if (t == Val.size() - 1)
+				{
+					fileOutput << Val[t];
+				}
+				else
+				{
+					fileOutput << Val[t] << ", ";
+				}
+			}
+			fileOutput << " }" << std::endl;
+
+		}
+
+		for (int i = 0; i < this->GetNumberOfBoolVectors(k); i++)
+		{
+			std::vector<bool> Val;
+			std::string ValName;
+			this->GetBoolVectorNameByIndex(k, i, ValName);
+			this->GetBoolVectorByIndex(k, i, Val);
+
+			fileOutput << ValName << " = { ";
+			for (int t = 0; t < Val.size(); t++)
+			{
+				if (t == Val.size() - 1)
+				{
+					fileOutput << Val[t];
+				}
+				else
+				{
+					fileOutput << Val[t] << ", ";
+				}
+			}
+			fileOutput << " }" << std::endl;
+
+
+		}
+
+		for (int i = 0; i < this->GetNumberOfStringVectors(k); i++)
+		{
+			std::vector<std::string> Val;
+			std::string ValName;
+			this->GetStringVectorNameByIndex(k, i, ValName);
+			this->GetStringVectorByIndex(k, i, Val);
+
+			fileOutput << ValName << " = { ";
+			for (int t = 0; t < Val.size(); t++)
+			{
+				if (t == Val.size() - 1)
+				{
+					fileOutput << "\"" << Val[t] << "\"";
+				}
+				else
+				{
+					fileOutput << "\"" << Val[t] << "\"" << ", ";
+				}
+			}
+			fileOutput << " }" << std::endl;
+		}
+	}
+	fileOutput.close();
+}
+
+
+void ConfigDataClass::ClearConfigData()
+{
+	ConfigData.ConfigSections.clear();
+}
+
+
+bool ConfigDataClass::AddIntValueByName(const std::string SectionName, const std::string ValueName, int Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+	Section TempSection;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+
+			for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].IntVals.size(); i++)
+			{
+				if (ConfigData.ConfigSections[SectionIndex].IntVals[i].Name == ValueName)
+				{
+					ValueIndex = i;
+					ConfigData.ConfigSections[SectionIndex].IntVals[ValueIndex].Val = Value;
+					
+					return true;
+				}
+			}
+
+			if (ValueIndex = -1)
+			{
+				std::string valName = ValueName;
+				IntValue tempvalue(valName, Value);
+				ConfigData.ConfigSections[SectionIndex].IntVals.push_back(tempvalue);
+
+				return true;
+			}
+
+		}
+	}
+
+	std::string valName = ValueName;
+	IntValue tempvalue(valName, Value);
+
+	TempSection.SectionName = SectionName;
+	TempSection.IntVals.push_back(tempvalue);
+
+	ConfigData.ConfigSections.push_back(TempSection);
+
+	return true;
+}
+
+
+bool ConfigDataClass::AddFloatValueByName(const std::string SectionName, const std::string ValueName, float Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+	Section TempSection;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+
+			for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].FloatVals.size(); i++)
+			{
+				if (ConfigData.ConfigSections[SectionIndex].FloatVals[i].Name == ValueName)
+				{
+					ValueIndex = i;
+					ConfigData.ConfigSections[SectionIndex].FloatVals[ValueIndex].Val = Value;
+
+					return true;
+				}
+			}
+
+			if (ValueIndex = -1)
+			{
+				std::string valName = ValueName;
+				FloatValue tempvalue(valName, Value);
+				ConfigData.ConfigSections[SectionIndex].FloatVals.push_back(tempvalue);
+
+				return true;
+			}
+
+		}
+	}
+
+	std::string valName = ValueName;
+	FloatValue tempvalue(valName, Value);
+
+	TempSection.SectionName = SectionName;
+	TempSection.FloatVals.push_back(tempvalue);
+
+	ConfigData.ConfigSections.push_back(TempSection);
+
+	return true;
+}
+
+
+bool ConfigDataClass::AddBoolValueByName(const std::string SectionName, const std::string ValueName, bool Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+	Section TempSection;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+
+			for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].BoolVals.size(); i++)
+			{
+				if (ConfigData.ConfigSections[SectionIndex].BoolVals[i].Name == ValueName)
+				{
+					ValueIndex = i;
+					ConfigData.ConfigSections[SectionIndex].BoolVals[ValueIndex].Val = Value;
+
+					return true;
+				}
+			}
+
+			if (ValueIndex = -1)
+			{
+				std::string valName = ValueName;
+				BoolValue tempvalue(valName, Value);
+				ConfigData.ConfigSections[SectionIndex].BoolVals.push_back(tempvalue);
+
+				return true;
+			}
+
+		}
+	}
+
+	std::string valName = ValueName;
+	BoolValue tempvalue(valName, Value);
+
+	TempSection.SectionName = SectionName;
+	TempSection.BoolVals.push_back(tempvalue);
+
+	ConfigData.ConfigSections.push_back(TempSection);
+
+	return true;
+}
+
+
+bool ConfigDataClass::AddStringValueByName(const std::string SectionName, const std::string ValueName, std::string Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+	Section TempSection;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+
+			for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].StringVals.size(); i++)
+			{
+				if (ConfigData.ConfigSections[SectionIndex].StringVals[i].Name == ValueName)
+				{
+					ValueIndex = i;
+					ConfigData.ConfigSections[SectionIndex].StringVals[ValueIndex].Val = Value;
+
+					return true;
+				}
+			}
+
+			if (ValueIndex = -1)
+			{
+				std::string valName = ValueName;
+				StringValue tempvalue(valName, Value);
+				ConfigData.ConfigSections[SectionIndex].StringVals.push_back(tempvalue);
+
+				return true;
+			}
+
+		}
+	}
+
+	std::string valName = ValueName;
+	StringValue tempvalue(valName, Value);
+
+	TempSection.SectionName = SectionName;
+	TempSection.StringVals.push_back(tempvalue);
+
+	ConfigData.ConfigSections.push_back(TempSection);
+
+	return true;
+}
+
+
+bool ConfigDataClass::AddIntVectorByName(const std::string SectionName, const std::string ValueName, std::vector<int> Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+	Section TempSection;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+
+			for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].IntVectors.size(); i++)
+			{
+				if (ConfigData.ConfigSections[SectionIndex].IntVectors[i].Name == ValueName)
+				{
+					ValueIndex = i;
+					ConfigData.ConfigSections[SectionIndex].IntVectors[ValueIndex].Val = Value;
+
+					return true;
+				}
+			}
+
+			if (ValueIndex = -1)
+			{
+				std::string valName = ValueName;
+				IntVector tempvalue(valName, Value);
+				ConfigData.ConfigSections[SectionIndex].IntVectors.push_back(tempvalue);
+
+				return true;
+			}
+
+		}
+	}
+
+	std::string valName = ValueName;
+	IntVector tempvalue(valName, Value);
+
+	TempSection.SectionName = SectionName;
+	TempSection.IntVectors.push_back(tempvalue);
+
+	ConfigData.ConfigSections.push_back(TempSection);
+
+	return true;
+}
+
+
+bool ConfigDataClass::AddFloatVectorByName(const std::string SectionName, const std::string ValueName, std::vector<float> Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+	Section TempSection;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+
+			for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].FloatVectors.size(); i++)
+			{
+				if (ConfigData.ConfigSections[SectionIndex].FloatVectors[i].Name == ValueName)
+				{
+					ValueIndex = i;
+					ConfigData.ConfigSections[SectionIndex].FloatVectors[ValueIndex].Val = Value;
+
+					return true;
+				}
+			}
+
+			if (ValueIndex = -1)
+			{
+				std::string valName = ValueName;
+				FloatVector tempvalue(valName, Value);
+				ConfigData.ConfigSections[SectionIndex].FloatVectors.push_back(tempvalue);
+
+				return true;
+			}
+
+		}
+	}
+
+	std::string valName = ValueName;
+	FloatVector tempvalue(valName, Value);
+
+	TempSection.SectionName = SectionName;
+	TempSection.FloatVectors.push_back(tempvalue);
+
+	ConfigData.ConfigSections.push_back(TempSection);
+
+	return true;
+}
+
+
+bool ConfigDataClass::AddBoolVectorByName(const std::string SectionName, const std::string ValueName, std::vector<bool> Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+	Section TempSection;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+
+			for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].BoolVectors.size(); i++)
+			{
+				if (ConfigData.ConfigSections[SectionIndex].BoolVectors[i].Name == ValueName)
+				{
+					ValueIndex = i;
+					ConfigData.ConfigSections[SectionIndex].BoolVectors[ValueIndex].Val = Value;
+
+					return true;
+				}
+			}
+
+			if (ValueIndex = -1)
+			{
+				std::string valName = ValueName;
+				BoolVector tempvalue(valName, Value);
+				ConfigData.ConfigSections[SectionIndex].BoolVectors.push_back(tempvalue);
+
+				return true;
+			}
+
+		}
+	}
+
+	std::string valName = ValueName;
+	BoolVector tempvalue(valName, Value);
+
+	TempSection.SectionName = SectionName;
+	TempSection.BoolVectors.push_back(tempvalue);
+
+	ConfigData.ConfigSections.push_back(TempSection);
+
+	return true;
+}
+
+
+bool ConfigDataClass::AddStringVectorByName(const std::string SectionName, const std::string ValueName, std::vector<std::string> Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+	Section TempSection;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+
+			for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].StringVectors.size(); i++)
+			{
+				if (ConfigData.ConfigSections[SectionIndex].StringVectors[i].Name == ValueName)
+				{
+					ValueIndex = i;
+					ConfigData.ConfigSections[SectionIndex].StringVectors[ValueIndex].Val = Value;
+
+					return true;
+				}
+			}
+
+			if (ValueIndex = -1)
+			{
+				std::string valName = ValueName;
+				StringVector tempvalue(valName, Value);
+				ConfigData.ConfigSections[SectionIndex].StringVectors.push_back(tempvalue);
+
+				return true;
+			}
+
+		}
+	}
+
+	std::string valName = ValueName;
+	StringVector tempvalue(valName, Value);
+
+	TempSection.SectionName = SectionName;
+	TempSection.StringVectors.push_back(tempvalue);
+
+	ConfigData.ConfigSections.push_back(TempSection);
+
+	return true;
+}
+
+
+int ConfigDataClass::GetNumberOfSections()
+{
+	return ConfigData.ConfigSections.size();
+}
+
+
+bool ConfigDataClass::GetSectionName(const int SectionIndex, std::string& SectionName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		SectionName = ConfigData.ConfigSections[SectionIndex].SectionName;
+		return true;
+	}
+	return false;
+}
+
+
+int ConfigDataClass::GetNumberOfIntValues(const int sectionIndex)
+{
+	return ConfigData.ConfigSections[sectionIndex].IntVals.size();
+}
+
+
+int ConfigDataClass::GetNumberOfIntVectors(const int sectionIndex)
+{
+	return ConfigData.ConfigSections[sectionIndex].IntVectors.size();
+}
+
+
+int ConfigDataClass::GetNumberOfFloatValues(const int sectionIndex)
+{
+	return ConfigData.ConfigSections[sectionIndex].FloatVals.size();
+}
+
+
+int ConfigDataClass::GetNumberOfFloatVectors(const int sectionIndex)
+{
+	return ConfigData.ConfigSections[sectionIndex].FloatVectors.size();
+}
+
+
+int ConfigDataClass::GetNumberOfBoolValues(const int sectionIndex)
+{
+	return ConfigData.ConfigSections[sectionIndex].BoolVals.size();
+}
+
+
+int ConfigDataClass::GetNumberOfBoolVectors(const int sectionIndex)
+{
+	return ConfigData.ConfigSections[sectionIndex].BoolVectors.size();
+}
+
+
+int ConfigDataClass::GetNumberOfStringValues(const int sectionIndex)
+{
+	return ConfigData.ConfigSections[sectionIndex].StringVals.size();
+}
+
+
+int ConfigDataClass::GetNumberOfStringVectors(const int sectionIndex)
+{
+	return ConfigData.ConfigSections[sectionIndex].StringVectors.size();
+}
+
+
+bool ConfigDataClass::GetIntValueNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].IntVals.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].IntVals.size())
+		{
+			ValueName = ConfigData.ConfigSections[SectionIndex].IntVals[ValueIndex].Name;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetIntValueByIndex(const int SectionIndex, const int ValueIndex, int& Value)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].IntVals.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].IntVals.size())
+		{
+			Value = ConfigData.ConfigSections[SectionIndex].IntVals[ValueIndex].Val;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetIntValueByName(const std::string SectionName, const std::string ValueName, int& Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+		}
+	}
+	if (SectionIndex == -1)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].IntVals.size(); i++)
+	{
+		if (ConfigData.ConfigSections[SectionIndex].IntVals[i].Name == ValueName)
+		{
+			ValueIndex = i;
+		}
+	}
+	if (ValueIndex == -1)
+	{
+		return false;
+	}
+
+	Value = ConfigData.ConfigSections[SectionIndex].IntVals[ValueIndex].Val;
+	return true;
+}
+
+
+bool ConfigDataClass::GetIntVectorNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].IntVectors.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].IntVectors.size())
+		{
+			ValueName = ConfigData.ConfigSections[SectionIndex].IntVectors[ValueIndex].Name;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetIntVectorByIndex(const int SectionIndex, const int ValueIndex, std::vector<int>& Value)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].IntVectors.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].IntVectors.size())
+		{
+			Value = ConfigData.ConfigSections[SectionIndex].IntVectors[ValueIndex].Val;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetIntVectorByName(const std::string SectionName, const std::string ValueName, std::vector<int> &Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+		}
+	}
+	if (SectionIndex == -1)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].IntVectors.size(); i++)
+	{
+		if (ConfigData.ConfigSections[SectionIndex].IntVectors[i].Name == ValueName)
+		{
+			ValueIndex = i;
+		}
+	}
+	if (ValueIndex == -1)
+	{
+		return false;
+	}
+
+	Value = ConfigData.ConfigSections[SectionIndex].IntVectors[ValueIndex].Val;
+	return true;
+}
+
+
+bool ConfigDataClass::GetFloatValueNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].FloatVals.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].FloatVals.size())
+		{
+			ValueName = ConfigData.ConfigSections[SectionIndex].FloatVals[ValueIndex].Name;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+bool ConfigDataClass::GetFloatValueByIndex(const int SectionIndex, const int ValueIndex, float& Value)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].FloatVals.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].FloatVals.size())
+		{
+			Value = ConfigData.ConfigSections[SectionIndex].FloatVals[ValueIndex].Val;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetFloatValueByName(const std::string SectionName, const std::string ValueName, float& Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+		}
+	}
+	if (SectionIndex == -1)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].FloatVals.size(); i++)
+	{
+		if (ConfigData.ConfigSections[SectionIndex].FloatVals[i].Name == ValueName)
+		{
+			ValueIndex = i;
+		}
+	}
+	if (ValueIndex == -1)
+	{
+		return false;
+	}
+	Value = ConfigData.ConfigSections[SectionIndex].FloatVals[ValueIndex].Val;
+	return true;
+}
+
+
+bool ConfigDataClass::GetFloatVectorNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].FloatVectors.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].FloatVectors.size())
+		{
+			ValueName = ConfigData.ConfigSections[SectionIndex].FloatVectors[ValueIndex].Name;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetFloatVectorByIndex(const int SectionIndex, const int ValueIndex, std::vector<float>& Value)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].FloatVectors.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].FloatVectors.size())
+		{
+			Value = ConfigData.ConfigSections[SectionIndex].FloatVectors[ValueIndex].Val;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetFloatVectorByName(const std::string SectionName, const std::string ValueName, std::vector<float> &Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+		}
+	}
+	if (SectionIndex == -1)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].FloatVectors.size(); i++)
+	{
+		if (ConfigData.ConfigSections[SectionIndex].FloatVectors[i].Name == ValueName)
+		{
+			ValueIndex = i;
+		}
+	}
+	if (ValueIndex == -1)
+	{
+		return false;
+	}
+
+	Value = ConfigData.ConfigSections[SectionIndex].FloatVectors[ValueIndex].Val;
+	return true;
+}
+
+
+bool ConfigDataClass::GetBoolValueNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].BoolVals.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].BoolVals.size())
+		{
+			ValueName = ConfigData.ConfigSections[SectionIndex].BoolVals[ValueIndex].Name;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetBoolValueByIndex(const int SectionIndex, const int ValueIndex, bool& Value)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].BoolVals.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].BoolVals.size())
+		{
+			Value = ConfigData.ConfigSections[SectionIndex].BoolVals[ValueIndex].Val;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetBoolValueByName(const std::string SectionName, const std::string ValueName, bool& Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+		}
+	}
+	if (SectionIndex == -1)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].BoolVals.size(); i++)
+	{
+		if (ConfigData.ConfigSections[SectionIndex].BoolVals[i].Name == ValueName)
+		{
+			ValueIndex = i;
+		}
+	}
+	if (ValueIndex == -1)
+	{
+		return false;
+	}
+
+	Value = ConfigData.ConfigSections[SectionIndex].BoolVals[ValueIndex].Val;
+	return true;
+}
+
+
+bool ConfigDataClass::GetBoolVectorNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].BoolVectors.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].BoolVectors.size())
+		{
+			ValueName = ConfigData.ConfigSections[SectionIndex].BoolVectors[ValueIndex].Name;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetBoolVectorByIndex(const int SectionIndex, const int ValueIndex, std::vector<bool> &Value)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].BoolVectors.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].BoolVectors.size())
+		{
+			Value = ConfigData.ConfigSections[SectionIndex].BoolVectors[ValueIndex].Val;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetBoolVectorByName(const std::string SectionName, const std::string ValueName, std::vector<bool> &Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+		}
+	}
+	if (SectionIndex == -1)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].BoolVectors.size(); i++)
+	{
+		if (ConfigData.ConfigSections[SectionIndex].BoolVectors[i].Name == ValueName)
+		{
+			ValueIndex = i;
+		}
+	}
+	if (ValueIndex == -1)
+	{
+		return false;
+	}
+
+	Value = ConfigData.ConfigSections[SectionIndex].BoolVectors[ValueIndex].Val;
+	return true;
+}
+
+
+bool ConfigDataClass::GetStringValueNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].StringVals.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].StringVals.size())
+		{
+			ValueName = ConfigData.ConfigSections[SectionIndex].StringVals[ValueIndex].Name;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+bool ConfigDataClass::GetStringValueByIndex(const int SectionIndex, const int ValueIndex, std::string& Value)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].StringVals.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].StringVals.size())
+		{
+			Value = ConfigData.ConfigSections[SectionIndex].StringVals[ValueIndex].Val;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetStringValueByName(const std::string SectionName, const std::string ValueName, std::string& Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+		}
+	}
+	if (SectionIndex == -1)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].StringVals.size(); i++)
+	{
+		if (ConfigData.ConfigSections[SectionIndex].StringVals[i].Name == ValueName)
+		{
+			ValueIndex = i;
+		}
+	}
+	if (ValueIndex == -1)
+	{
+		return false;
+	}
+
+	Value = ConfigData.ConfigSections[SectionIndex].StringVals[ValueIndex].Val;
+	return true;
+}
+
+
+bool ConfigDataClass::GetStringVectorNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].StringVectors.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].StringVectors.size())
+		{
+			ValueName = ConfigData.ConfigSections[SectionIndex].StringVectors[ValueIndex].Name;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+bool ConfigDataClass::GetStringVectorByIndex(const int SectionIndex, const int ValueIndex, std::vector<std::string> &Value)
+{
+	if (SectionIndex > ConfigData.ConfigSections.size())
+	{
+		return false;
+	}
+	if (SectionIndex <= ConfigData.ConfigSections.size())
+	{
+		if (ValueIndex > ConfigData.ConfigSections[SectionIndex].StringVectors.size())
+		{
+			return false;
+		}
+		if (ValueIndex <= ConfigData.ConfigSections[SectionIndex].StringVectors.size())
+		{
+			Value = ConfigData.ConfigSections[SectionIndex].StringVectors[ValueIndex].Val;
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ConfigDataClass::GetStringVectorByName(const std::string SectionName, const std::string ValueName, std::vector<std::string> &Value)
+{
+	int SectionIndex = -1;
+	int ValueIndex = -1;
+
+	for (int i = 0; i < ConfigData.ConfigSections.size(); i++)
+	{
+		if (ConfigData.ConfigSections[i].SectionName == SectionName)
+		{
+			SectionIndex = i;
+		}
+	}
+	if (SectionIndex == -1)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < ConfigData.ConfigSections[SectionIndex].StringVectors.size(); i++)
+	{
+		if (ConfigData.ConfigSections[SectionIndex].StringVectors[i].Name == ValueName)
+		{
+			ValueIndex = i;
+		}
+	}
+	if (ValueIndex == -1)
+	{
+		return false;
+	}
+
+	Value = ConfigData.ConfigSections[SectionIndex].StringVectors[ValueIndex].Val;
+	return true;
+}
+

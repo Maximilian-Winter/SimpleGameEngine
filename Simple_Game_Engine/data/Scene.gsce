@@ -1,0 +1,161 @@
+[Ground]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/ground.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionStaticTriangleMesh"
+Name = "Ground"
+Mass = 0.0
+Position = {0.0, 0.0, 0.0}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+
+[Cube]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/Cube.smo"
+CullingVolumeType = "CullBox"
+CollisionBodyType = "CollisionPlane"
+Name = "Cube"
+Mass = 0.0
+Position = {0.0, -15.0, 0.0}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+
+
+[Barrel]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/Barrel.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionConvexHullMesh"
+Name = "Barrel"
+Mass = 5.0
+Position = {0.0, 1.0, 10.0}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {0.1, 0.1, 0.1}
+
+[Cerberus]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/Cerberus.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionConvexHullMesh"
+Name = "Cerberus"
+Mass = 500.0
+Position = {0.0, 2.0, 10.0}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+
+[Pin01]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin01"
+Mass = 2.5
+Position = {-4.5, 0.1, 10.0}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin02]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin02"
+Mass = 2.5
+Position = {-4.0, 0.1, 10.5}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin03]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin03"
+Mass = 2.5
+Position = {-4.0, 0.1, 9.5}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin04]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin04"
+Mass = 2.5
+Position = {-3.5, 0.1, 9.0}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin05]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin05"
+Mass = 2.5
+Position = {-3.5, 0.1, 10.0}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin06]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin06"
+Mass = 2.5
+Position = {-3.5, 0.1, 11.0}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin07]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin07"
+Mass = 2.5
+Position = {-3.0, 0.1, 8.5}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin08]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin08"
+Mass = 2.5
+Position = {-3.0, 0.1, 9.5}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin09]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin09"
+Mass = 2.5
+Position = {-3.0, 0.1, 10.5}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+[Pin10]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin10"
+Mass = 2.5
+Position = {-3.0, 0.1, 11.5}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
+
+
+

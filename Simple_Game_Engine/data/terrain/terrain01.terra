@@ -1,0 +1,6 @@
+#terrain definition
+
+[terrain]
+heightmap= "data/terrain/heightmap01.bmp"
+terrainMaterialFile= "data/terrain/terrain.matlib"
+terrainMaterial= "terrainMat"

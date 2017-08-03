@@ -1,0 +1,7 @@
+#Default Material
+[Default]
+albedo_map = "data/models/defaultAlbedo.dds"
+roughness_map = "data/models/defaultRoughness.dds"
+metalness_map = "data/models/defaultMetalness.dds"
+f0 = 0.06
+render_forward = false

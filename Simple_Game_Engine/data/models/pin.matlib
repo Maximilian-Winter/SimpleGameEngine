@@ -1,0 +1,13 @@
+#SMO Converter Material File
+
+[pin00]
+f0 = 0.06
+render_forward = true
+is_transparent = 0
+transparency = 1.0
+use_alphachannel_transparency = 0
+albedo_map = "data/models/pin_albedo.dds"
+roughness_map = "data/models/pin_roughness.dds"
+metalness_map = "data/models/defaultMetalness.dds"
+normal_map = "data/models/pin_normals.dds"
+

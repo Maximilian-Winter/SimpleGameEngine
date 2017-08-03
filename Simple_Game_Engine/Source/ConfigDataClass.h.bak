@@ -1,0 +1,754 @@
+////////////////////////////////////////////////////////////////////////////////
+// Filename: ConfigDataClass.h
+// Date: 07.06.2015
+// Author: Maximilian Winter
+////////////////////////////////////////////////////////////////////////////////
+#ifndef _CONFIGDATACLASS_H_
+#define _CONFIGDATACLASS_H_
+
+////////////////////////////////////////////////////////////////////////////////
+//Includes
+////////////////////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <istream>
+#include <vector>
+#include <algorithm>
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Class name: ConfigDataClass
+////////////////////////////////////////////////////////////////////////////////
+
+class ConfigDataClass
+{
+	//Data Structures for the Configfile
+	struct IntValue
+	{
+		IntValue(std::string ValName, int Value)
+		{
+			Name = ValName;
+			Val = Value;
+		}
+		std::string Name;
+		int Val;
+	};
+
+	struct IntVector
+	{
+		IntVector(std::string ValName, std::vector<int> Value)
+		{
+			Name = ValName;
+			Val = Value;
+		}
+		std::string Name;
+		std::vector<int> Val;
+	};
+
+	struct FloatValue
+	{
+		FloatValue(std::string ValName, float Value)
+		{
+			Name = ValName;
+			Val = Value;
+		}
+		std::string Name;
+		float Val;
+	};
+
+	struct FloatVector
+	{
+		FloatVector(std::string ValName, std::vector<float> Value)
+		{
+			Name = ValName;
+			Val = Value;
+		}
+		std::string Name;
+		std::vector<float> Val;
+	};
+
+	struct BoolValue
+	{
+		BoolValue(std::string ValName, bool Value)
+		{
+			Name = ValName;
+			Val = Value;
+		}
+		std::string Name;
+		bool Val;
+	};
+
+	struct BoolVector
+	{
+		BoolVector(std::string ValName, std::vector<bool> Value)
+		{
+			Name = ValName;
+			Val = Value;
+		}
+		std::string Name;
+		std::vector<bool> Val;
+	};
+
+	struct StringValue
+	{
+		StringValue(std::string ValName, std::string Value)
+		{
+			Name = ValName;
+			Val = Value;
+		}
+		std::string Name;
+		std::string Val;
+	};
+
+	struct StringVector
+	{
+		StringVector(std::string ValName, std::vector<std::string> Value)
+		{
+			Name = ValName;
+			Val = Value;
+		}
+		std::string Name;
+		std::vector<std::string> Val;
+	};
+
+	struct Section
+	{
+		std::string SectionName;
+
+		std::vector<IntValue> IntVals;
+		std::vector<IntVector> IntVectors;
+		std::vector<FloatValue> FloatVals;
+		std::vector<FloatVector> FloatVectors;
+		std::vector<BoolValue> BoolVals;
+		std::vector<BoolVector> BoolVectors;
+		std::vector<StringValue> StringVals;
+		std::vector<StringVector> StringVectors;
+	};
+
+	struct Config
+	{
+		std::vector<Section> ConfigSections;
+	};
+
+
+
+	//Helper Function to parse the Configfile
+	void DeleteWhitespacesFromLine(std::string &line)
+	{
+		line.erase(std::remove_if(line.begin(), line.end(), ::isspace), line.end());
+	}
+
+	void DeleteCharFromLine(std::string &line,char Char)
+	{
+		line.erase(std::remove(line.begin(), line.end(), Char), line.end());
+	}
+
+	void DeleteOpenAndCloseingCurlyBracesFromLine(std::string &line)
+	{
+		line.erase(0, 1);
+		line.erase(line.size() - 1, 1);
+	}
+
+	void DeleteOpenAndCloseingQuotationMarkFromLine(std::string &line)
+	{
+		line.erase(line.begin());
+		line.erase(line.size() - 1);
+	}
+
+	bool HasOpenAndCloseingCurlyBraces(const std::string &line)
+	{
+		if (line.find_first_of("{") == 0)
+		{
+			return (line.find_last_of("}") == line.size() - 1);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool HasOpenAndCloseingQuotationMarks(const std::string &line)
+	{
+		if (line.find_first_of("\"") == 0)
+		{
+			return (line.find_last_of("\"") == line.size() - 1);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	void RemoveCommentFromLine(std::string &line)
+	{
+		if (line.find("#") != line.npos)
+		{
+			line.erase(line.find("#"));
+		}
+	}
+
+
+
+	bool IsOnlyWhitespacesLine(const std::string &line)
+	{
+		return (line.find_first_not_of(" ") == line.npos);
+	}
+
+	bool IsSectionNameLine(const std::string &line)
+	{
+		std::string lineContent = line;
+		DeleteWhitespacesFromLine(lineContent);
+
+		if (lineContent.find_first_of("[") == 0)
+		{
+			if (lineContent.find_first_of("]") == lineContent.size() - 1)
+			{
+				if (lineContent.find_first_of("=") == std::string::npos)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+
+	bool IsValueLine(const std::string &line)
+	{
+		if (line.find_first_of("=") != std::string::npos)
+		{
+			std::string value = line;
+
+			DeleteWhitespacesFromLine(value);
+
+			if (value.find_first_of("=") != 0)
+			{		
+				int pos = line.find_first_of("=") + 1;
+
+				if (!(pos >= line.size()))
+				{
+					return (line.find_first_not_of(" ", pos) != std::string::npos);
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+
+	bool IsIntValueLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		
+		if (Value.find_first_of(".") == std::string::npos)
+		{
+			DeleteWhitespacesFromLine(Value);
+			DeleteCharFromLine(Value, '-');
+			return std::all_of(Value.begin(), Value.end(), ::isdigit);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsFloatValueLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		
+
+		if (Value.find_first_of(".") != std::string::npos)
+		{
+			DeleteWhitespacesFromLine(Value);
+			DeleteCharFromLine(Value, '.');
+			DeleteCharFromLine(Value, '-');
+
+			return std::all_of(Value.begin(), Value.end(), ::isdigit);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsBoolValueLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+
+		if (Value == "true" || Value == "True" || Value == "1" || Value == "False" || Value == "false" || Value == "0")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsStringValueLine(const std::string &line)
+	{
+		int ValStartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(ValStartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+
+		return HasOpenAndCloseingQuotationMarks(Value);
+	}
+
+
+
+	bool IsIntVectorLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+
+		if (Value.find_first_of(".") == std::string::npos)
+		{
+			DeleteWhitespacesFromLine(Value);
+			if (HasOpenAndCloseingCurlyBraces(Value))
+			{
+				
+				DeleteOpenAndCloseingCurlyBracesFromLine(Value);
+				DeleteCharFromLine(Value, ',');
+				DeleteCharFromLine(Value, '-');
+
+				return std::all_of(Value.begin(), Value.end(), ::isdigit);
+			}
+			else
+			{
+				return false;
+			}
+
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsFloatVectorLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+
+		if (HasOpenAndCloseingCurlyBraces(Value))
+		{
+			if (Value.find_first_of(".") != std::string::npos)
+			{
+				DeleteOpenAndCloseingCurlyBracesFromLine(Value);
+				DeleteCharFromLine(Value, ',');
+				DeleteCharFromLine(Value, '.');
+				DeleteCharFromLine(Value, '-');
+				DeleteCharFromLine(Value, 'e');
+				DeleteCharFromLine(Value, 'E');
+				return std::all_of(Value.begin(), Value.end(), ::isdigit);
+
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsBoolVectorLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+
+		if (HasOpenAndCloseingCurlyBraces(Value))
+		{
+			DeleteOpenAndCloseingCurlyBracesFromLine(Value);
+
+			size_t n = std::count(Value.begin(), Value.end(), ',');
+
+			for (int i = 0; i <= n; i++)
+			{
+				int CommaPos = Value.find_first_of(",");
+				std::string TempValue = Value.substr(0, CommaPos);
+
+				if ((TempValue != "True" && TempValue != "true" && TempValue != "1" && TempValue != "False" && TempValue != "false" && TempValue != "0"))
+				{
+					return false;
+				}
+				Value.erase(0, CommaPos + 1);
+			}
+
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsStringVectorLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+
+		if (HasOpenAndCloseingCurlyBraces(Value))
+		{
+			DeleteOpenAndCloseingCurlyBracesFromLine(Value);
+
+			size_t n = std::count(Value.begin(), Value.end(), ',');
+
+			for (int i = 0; i <= n; i++)
+			{
+				int CommaPos = Value.find_first_of(",");
+				std::string TempValue = Value.substr(0, CommaPos);
+
+				if (!HasOpenAndCloseingQuotationMarks(Value))
+				{
+					return false;
+				}
+				Value.erase(0, CommaPos + 1);
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsNumericValue(const std::string &str)
+	{
+		if (str.find_first_of(".") != std::string::npos)
+		{
+			std::string Temp1 = str.substr(0, str.find_first_of(".") - 1);
+			std::string Temp2 = str.substr(str.find_first_of(".") + 1, std::string::npos);
+
+			bool res = std::all_of(Temp1.begin(), Temp1.end(), ::isdigit);
+			if (!res)
+			{
+				return false;
+			}
+
+			return std::all_of(Temp2.begin(), Temp2.end(), ::isdigit);
+		}
+
+		return std::all_of(str.begin(), str.end(), ::isdigit);
+	}
+
+
+
+	std::string GetSectionNameFromLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("[") + 1;
+		int Length = line.find_first_of("]") - StartPos;
+		std::string SectionName = line.substr(StartPos, Length);
+		DeleteWhitespacesFromLine(SectionName);
+
+		return SectionName;
+	}
+
+	std::string GetValueNameFromLine(const std::string &line)
+	{
+		int length = line.find_first_of("=");
+		std::string ValueName = line.substr(0, length);
+
+		DeleteWhitespacesFromLine(ValueName);
+
+		return ValueName;
+	}
+
+
+
+	int GetIntValueFromLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+
+		return std::stoi(Value);
+	}
+
+	float GetFloatValueFromLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+
+		return std::stof(Value);
+	}
+
+	bool GetBoolValueFromLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+
+		if (Value == "true")
+		{
+			return true;
+		}
+		if (Value == "True")
+		{
+			return true;
+		}
+		if (Value == "1")
+		{
+			return true;
+		}
+		if (Value == "false")
+		{
+			return false;
+		}
+		if (Value == "False")
+		{
+			return false;
+		}
+		if (Value == "0")
+		{
+			return false;
+		}
+
+		return false;
+	}
+
+	std::string GetStringValueFromLine(const std::string &line)
+	{
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+
+		unsigned first = line.find_first_of("\"") + 1;
+		unsigned last = line.find_last_of("\"");
+
+		Value = line.substr(first, last - first);
+
+		//DeleteOpenAndCloseingQuotationMarkFromLine(Value);
+
+		return Value;
+	}
+
+
+
+	std::vector<int> GetIntVectorFromLine(const std::string &line)
+	{
+		std::vector<int> TempVector;
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+		DeleteOpenAndCloseingCurlyBracesFromLine(Value);
+
+		std::stringstream ss(Value);
+
+		int i;
+
+		while (ss >> i)
+		{
+			TempVector.push_back(i);
+			if (ss.peek() == ',')
+				ss.ignore();
+		}
+
+		return TempVector;
+	}
+
+	std::vector<float> GetFloatVectorFromLine(const std::string &line)
+	{
+		std::vector<float> TempVector;
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+		DeleteOpenAndCloseingCurlyBracesFromLine(Value);
+
+		std::stringstream ss(Value);
+
+		float i;
+
+		while (ss >> i)
+		{
+			TempVector.push_back(i);
+			if (ss.peek() == ',')
+				ss.ignore();
+		}
+
+		return TempVector;
+	}
+
+	std::vector<bool> GetBoolVectorFromLine(const std::string &line)
+	{
+		std::vector<bool> TempVector;
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteWhitespacesFromLine(Value);
+		DeleteOpenAndCloseingCurlyBracesFromLine(Value);
+
+		size_t n = std::count(Value.begin(), Value.end(), ',');
+
+		for (int i = 0; i <= n; i++)
+		{
+			int CommaPos = Value.find_first_of(",");
+			std::string TempValue = Value.substr(0, CommaPos);
+
+			if (TempValue == "true")
+			{
+				TempVector.push_back(true);
+			}
+			if (TempValue == "True")
+			{
+				TempVector.push_back(true);
+			}
+			if (TempValue == "1")
+			{
+				TempVector.push_back(true);
+			}
+			if (TempValue == "false")
+			{
+				TempVector.push_back(false);
+			}
+			if (TempValue == "False")
+			{
+				TempVector.push_back(false);
+			}
+			if (TempValue == "0")
+			{
+				TempVector.push_back(false);
+			}
+
+			Value.erase(0, CommaPos + 1);
+		}
+
+		return TempVector;
+	}
+
+	std::vector<std::string> GetStringVectorFromLine(const std::string &line)
+	{
+		std::vector<std::string> TempVector;
+		int StartPos = line.find_first_of("=") + 1;
+		std::string Value = line.substr(StartPos, std::string::npos);
+		DeleteOpenAndCloseingCurlyBracesFromLine(Value);
+
+		size_t n = std::count(Value.begin(), Value.end(), ',');
+
+		for (int i = 0; i <= n; i++)
+		{
+			int CommaPos = Value.find_first_of(",");
+			std::string TempValue = Value.substr(0, CommaPos);
+
+			unsigned first = TempValue.find_first_of("\"") + 1;
+			unsigned last = TempValue.find_last_of("\"");
+
+			TempValue = TempValue.substr(first, last - first);
+
+			TempVector.push_back(TempValue);
+
+			Value.erase(0, CommaPos + 1);
+		}
+
+		return TempVector;
+	}
+
+public:
+
+	ConfigDataClass();
+	ConfigDataClass(const ConfigDataClass&);
+	~ConfigDataClass();
+
+	bool LoadConfigDataFile(const std::string FileName);
+	void SaveConfigDataFile(const std::string FileName);
+
+	void ClearConfigData();
+
+	//Add Value Functions
+	bool AddIntValueByName(const std::string SectionName, const std::string ValueName, int Value);
+	bool AddFloatValueByName(const std::string SectionName, const std::string ValueName, float Value);
+	bool AddBoolValueByName(const std::string SectionName, const std::string ValueName, bool Value);
+	bool AddStringValueByName(const std::string SectionName, const std::string ValueName, std::string Value);
+
+	//Add Vector Functions
+	bool AddIntVectorByName(const std::string SectionName, const std::string ValueName, std::vector<int> Value);
+	bool AddFloatVectorByName(const std::string SectionName, const std::string ValueName, std::vector<float> Value);
+	bool AddBoolVectorByName(const std::string SectionName, const std::string ValueName, std::vector<bool> Value);
+	bool AddStringVectorByName(const std::string SectionName, const std::string ValueName, std::vector<std::string> Value);
+
+	//Get Section info's
+	int GetNumberOfSections();
+	bool GetSectionName(const int SectionIndex, std::string& SectionName);
+
+	//Get count of section values
+	int GetNumberOfIntValues(const int SectionIndex);
+	int GetNumberOfIntVectors(const int SectionIndex);
+	int GetNumberOfFloatValues(const int SectionIndex);
+	int GetNumberOfFloatVectors(const int SectionIndex);
+	int GetNumberOfBoolValues(const int SectionIndex);
+	int GetNumberOfBoolVectors(const int SectionIndex);
+	int GetNumberOfStringValues(const int SectionIndex);
+	int GetNumberOfStringVectors(const int SectionIndex);
+	
+	//Get section values
+	bool GetIntValueNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName);
+	bool GetIntValueByIndex(const int SectionIndex, const int ValueIndex, int& Value);
+	bool GetIntValueByName(const std::string SectionName, const std::string ValueName, int& Value);
+
+	bool GetFloatValueNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName);
+	bool GetFloatValueByIndex(const int SectionIndex, const int ValueIndex, float& Value);
+	bool GetFloatValueByName(const std::string SectionName, const std::string ValueName, float& Value);
+
+	bool GetBoolValueNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName);
+	bool GetBoolValueByIndex(const int SectionIndex, const int ValueIndex, bool& Value);
+	bool GetBoolValueByName(const std::string SectionName, const std::string ValueName, bool& Value);
+
+	bool GetStringValueNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName);
+	bool GetStringValueByIndex(const int SectionIndex, const int ValueIndex, std::string& Value);
+	bool GetStringValueByName(const std::string SectionName, const std::string ValueName, std::string& Value);
+
+
+	//Get section vectors
+	bool GetIntVectorNameByIndex(const int SectionIndex, const int ValueIndex, std::string &ValueName);
+	bool GetIntVectorByIndex(const int SectionIndex, const int ValueIndex, std::vector<int> &Value);
+	bool GetIntVectorByName(const std::string SectionName, const std::string ValueName, std::vector<int> &Value);
+
+	bool GetFloatVectorNameByIndex(const int SectionIndex, const int ValueIndex, std::string &ValueName);
+	bool GetFloatVectorByIndex(const int SectionIndex, const int ValueIndex, std::vector<float> &Value);
+	bool GetFloatVectorByName(const std::string SectionName, const std::string ValueName, std::vector<float> &Value);
+
+	bool GetBoolVectorNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName);
+	bool GetBoolVectorByIndex(const int SectionIndex, const int ValueIndex, std::vector<bool> &Value);
+	bool GetBoolVectorByName(const std::string SectionName, const std::string ValueName, std::vector<bool> &Value);
+
+	bool GetStringVectorNameByIndex(const int SectionIndex, const int ValueIndex, std::string& ValueName);
+	bool GetStringVectorByIndex(const int SectionIndex, const int ValueIndex, std::vector<std::string> &Value);
+	bool GetStringVectorByName(const std::string SectionName, const std::string ValueName, std::vector<std::string> &Value);
+
+private:
+
+	Config ConfigData;
+};
+
+#endif
