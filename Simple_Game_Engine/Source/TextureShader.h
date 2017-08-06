@@ -9,6 +9,7 @@
 #include <DirectXMath.h>
 #include <fstream>
 
+#include "ShaderHelper.h"
 
 class TextureShader
 {
@@ -32,7 +33,6 @@ public:
 private:
 	bool InitializeShader(ID3D11Device*, HWND, WCHAR*);
 	void ShutdownShader();
-	void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
 
 	bool SetShaderParameters(ID3D11DeviceContext*, DirectX::CXMMATRIX, DirectX::CXMMATRIX, DirectX::CXMMATRIX, ID3D11ShaderResourceView*);
 	void RenderShader(ID3D11DeviceContext*, int);

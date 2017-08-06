@@ -5,8 +5,6 @@ SkyboxShader::SkyboxShader()
 	m_VertexShader = 0;
 	m_PixelShader = 0;
 	m_Layout = 0;
-	m_SampleState = 0;
-
 }
 
 
@@ -34,12 +32,6 @@ SkyboxShader::~SkyboxShader()
 	{
 		m_Layout->Release();
 		m_Layout = 0;
-	}
-
-	if (m_SampleState)
-	{
-		m_SampleState->Release();
-		m_SampleState = 0;
 	}
 }
 
@@ -205,9 +197,6 @@ bool SkyboxShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* shad
 	ID3D10Blob* pixelShaderBuffer;
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[3];
 	unsigned int numElements;
-	D3D11_SAMPLER_DESC samplerDesc;
-	D3D11_SAMPLER_DESC AnsioamplerDesc;
-	D3D11_SAMPLER_DESC ClampSamplerDesc;
 
 	// Initialize the pointers this function will use to null.
 	errorMessage = 0;
@@ -221,7 +210,7 @@ bool SkyboxShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* shad
 		// If the shader failed to compile it should have writen something to the error message.
 		if (errorMessage)
 		{
-			OutputShaderErrorMessage(errorMessage, hwnd, shaderFilename);
+			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, shaderFilename);
 		}
 		// If there was nothing in the error message then it simply could not find the shader file itself.
 		else
@@ -239,7 +228,7 @@ bool SkyboxShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* shad
 		// If the shader failed to compile it should have writen something to the error message.
 		if (errorMessage)
 		{
-			OutputShaderErrorMessage(errorMessage, hwnd, shaderFilename);
+			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, shaderFilename);
 		}
 		// If there was nothing in the error message then it simply could not find the file itself.
 		else
@@ -309,64 +298,7 @@ bool SkyboxShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* shad
 	pixelShaderBuffer->Release();
 	pixelShaderBuffer = 0;
 
-	// Create a texture sampler state description.
-	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.MipLODBias = 0.0f;
-	samplerDesc.MaxAnisotropy = 1;
-	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-	samplerDesc.BorderColor[0] = 0.0;
-	samplerDesc.BorderColor[1] = 0.0;
-	samplerDesc.BorderColor[2] = 0.0;
-	samplerDesc.BorderColor[3] = 0.0;
-	samplerDesc.MinLOD = 0;
-	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-	// Create the texture sampler state.
-	result = device->CreateSamplerState(&samplerDesc, &m_SampleState);
-	if (FAILED(result))
-	{
-		return false;
-	}
-
 	return true;
-}
-
-void SkyboxShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename)
-{
-	char* compileErrors;
-	unsigned long bufferSize, i;
-	std::ofstream fout;
-
-
-	// Get a pointer to the error message text buffer.
-	compileErrors = (char*)(errorMessage->GetBufferPointer());
-
-	// Get the length of the message.
-	bufferSize = errorMessage->GetBufferSize();
-
-	// Open a file to write the error message to.
-	fout.open("shader-error.txt");
-
-	// Write out the error message.
-	for (i = 0; i<bufferSize; i++)
-	{
-		fout << compileErrors[i];
-	}
-
-	// Close the file.
-	fout.close();
-
-	// Release the error message.
-	errorMessage->Release();
-	errorMessage = 0;
-
-	// Pop a message up on the screen to notify the user to check the text file for compile errors.
-	MessageBox(hwnd, L"Error compiling shader.  Check shader-error.txt for message.", shaderFilename, MB_OK);
-
-	return;
 }
 
 bool  SkyboxShader::Render(ID3D11DeviceContext* deviceContext)
@@ -403,8 +335,6 @@ bool  SkyboxShader::SetShadingParameters(ID3D11DeviceContext* deviceContext)
 
 void  SkyboxShader::RenderShader(ID3D11DeviceContext* deviceContext)
 {
-	deviceContext->PSSetSamplers(0, 1, &m_SampleState);
-
 	//Set the VS and PS shader
 	deviceContext->VSSetShader(m_VertexShader, 0, 0);
 	deviceContext->PSSetShader(m_PixelShader, 0, 0);

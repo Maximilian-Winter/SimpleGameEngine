@@ -1,10 +1,5 @@
-/////////////////////////////////////////////////////////////////////////////
-// Includes
-/////////////////////////////////////////////////////////////////////////////
 #include "ForwardShaderCommon.hlsl"
 #include "PBRCommon.hlsl"
-
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Constant Buffers
@@ -19,27 +14,6 @@ cbuffer CapsuleLightConstants : register( b2 )
 	float3 CapsuleLightColor	: packoffset( c2 );
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// Vertex shader
-/////////////////////////////////////////////////////////////////////////////
-
-VS_OUTPUT ForwardCapsuleLightVertexShader(VS_INPUT VertexShaderInput)
-{
-	VS_OUTPUT output;
-
-	output.Position = mul(VertexShaderInput.Position, WorldViewProjection);
-	float3 position = VertexShaderInput.Position.xyz;
-	float2 texCoord = VertexShaderInput.UV;
-
-	float3 normal = normalize(mul(VertexShaderInput.Normal, (float3x3)World));
-	float3 worldPos = mul(float4(position.xyz, 1), World).xyz;
-	output.PositionInWorld = worldPos;
-	output.PositionInWorldViewProj = mul(float4(position.xyz, 1), WorldViewProjection);
-	output.UV = texCoord;
-	output.Normal = normal;
-
-	return output;
-}
 
 /////////////////////////////////////////////////////////////////////////////
 // Pixel shaders

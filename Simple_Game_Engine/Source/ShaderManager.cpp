@@ -7,18 +7,21 @@ ShaderManager::ShaderManager()
 	m_forwardMaterialPSBuffer = 0;
 	m_forwardEyePositionBuffer = 0;
 	m_DeferredDataForUnpack = 0;
-}
 
+	m_LinearWrapSampleState = 0;
+	m_LinearClampSampleState = 0;
+	m_AnsiotropicWrapSampleState = 0;
+	m_PointClampSampleState = 0;
+	m_TestSampleState = 0;
+}
 
 ShaderManager::ShaderManager(const ShaderManager& other)
 {
 }
 
-
 ShaderManager::~ShaderManager()
 {
 }
-
 
 bool ShaderManager::Initialize(ID3D11Device* device, HWND hwnd)
 {
@@ -28,8 +31,7 @@ bool ShaderManager::Initialize(ID3D11Device* device, HWND hwnd)
 	D3D11_BUFFER_DESC MaterialBufferPSDesc;
 	D3D11_BUFFER_DESC EyePositionBufferPSDesc;
 	D3D11_BUFFER_DESC GBufferUnpackDesc;
-
-	D3D11_INPUT_ELEMENT_DESC forwardPolygonLayout[3];
+	D3D11_SAMPLER_DESC samplerDesc;
 
 	// Initialize the deferred shader object.
 	result = m_GBufferDebugShader.Initialize(device, hwnd);
@@ -171,9 +173,116 @@ bool ShaderManager::Initialize(ID3D11Device* device, HWND hwnd)
 		return false;
 	}
 
+	// Create a texture sampler state description.
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	result = device->CreateSamplerState(&samplerDesc, &m_LinearWrapSampleState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	result = device->CreateSamplerState(&samplerDesc, &m_PointClampSampleState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Create a texture sampler state description.
+	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 16;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0.0;
+	samplerDesc.BorderColor[1] = 0.0;
+	samplerDesc.BorderColor[2] = 0.0;
+	samplerDesc.BorderColor[3] = 0.0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	result = device->CreateSamplerState(&samplerDesc, &m_AnsiotropicWrapSampleState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Create a texture sampler state description.
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0.0;
+	samplerDesc.BorderColor[1] = 0.0;
+	samplerDesc.BorderColor[2] = 0.0;
+	samplerDesc.BorderColor[3] = 0.0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	result = device->CreateSamplerState(&samplerDesc, &m_LinearClampSampleState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	// Create a texture sampler state description.
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = 0;
+	samplerDesc.BorderColor[1] = 0;
+	samplerDesc.BorderColor[2] = 0;
+	samplerDesc.BorderColor[3] = 0;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	// Create the texture sampler state.
+	result = device->CreateSamplerState(&samplerDesc, &m_TestSampleState);
+	if (FAILED(result))
+	{
+		return false;
+	}
 	return true;
 }
-
 
 void ShaderManager::Shutdown()
 {
@@ -212,9 +321,35 @@ void ShaderManager::Shutdown()
 		m_DeferredDataForUnpack = 0;
 	}
 
-	
-}
+	if (m_LinearWrapSampleState)
+	{
+		m_LinearWrapSampleState->Release();
+		m_LinearWrapSampleState = 0;
+	}
 
+	if (m_LinearClampSampleState)
+	{
+		m_LinearClampSampleState->Release();
+		m_LinearClampSampleState = 0;
+	}
+
+	if (m_AnsiotropicWrapSampleState)
+	{
+		m_AnsiotropicWrapSampleState->Release();
+		m_AnsiotropicWrapSampleState = 0;
+	}
+
+	if (m_PointClampSampleState)
+	{
+		m_PointClampSampleState->Release();
+		m_PointClampSampleState = 0;
+	}
+	if (m_TestSampleState)
+	{
+		m_TestSampleState->Release();
+		m_TestSampleState = 0;
+	}
+}
 
 bool ShaderManager::SetVertexAndIndexBuffer(ID3D11DeviceContext* deviceContext, VerticesRenderData Vertices)
 {
@@ -229,7 +364,6 @@ bool ShaderManager::SetVertexAndIndexBuffer(ID3D11DeviceContext* deviceContext, 
 
 	return true;
 }
-
 
 bool ShaderManager::SetForwardShadingVSMatrixBuffer(ID3D11DeviceContext* deviceContext, DirectX::CXMMATRIX worldMatrix, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix)
 {
@@ -269,7 +403,6 @@ bool ShaderManager::SetForwardShadingVSMatrixBuffer(ID3D11DeviceContext* deviceC
 
 }
 
-
 bool ShaderManager::SetForwardShadingPSEyePositionBuffer(ID3D11DeviceContext* deviceContext, DirectX::FXMVECTOR eyePosition)
 {
 	HRESULT result;
@@ -302,7 +435,6 @@ bool ShaderManager::SetForwardShadingPSEyePositionBuffer(ID3D11DeviceContext* de
 
 	return true;
 }
-
 
 bool ShaderManager::SetForwardShadingPSMaterialProperties(ID3D11DeviceContext* deviceContext, SurfaceMaterial& Material)
 {
@@ -433,6 +565,39 @@ bool ShaderManager::SetDeferredShadingPSGBufferParameters(ID3D11DeviceContext* d
 	return true;
 }
 
+bool ShaderManager::RenderGBufferDebuggingShader(ID3D11DeviceContext* deviceContext, DeferredRenderData RenderData)
+{
+	bool result;
+
+	deviceContext->PSSetSamplers(0, 1, &m_PointClampSampleState);
+
+	result = m_GBufferDebugShader.Render(deviceContext, RenderData.DepthData, RenderData.AlbedoRoughnesData, RenderData.NormalData, RenderData.F0Metalness);
+
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool ShaderManager::RenderLine(ID3D11DeviceContext* deviceContext, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, DirectX::FXMVECTOR from, DirectX::FXMVECTOR to, int r, int g, int b, int a)
+{
+	bool result;
+
+	result = SetForwardShadingVSMatrixBuffer(deviceContext, DirectX::XMMatrixIdentity(), viewMatrix, projectionMatrix);
+	if (!result)
+	{
+		return false;
+	}
+
+	deviceContext->PSSetSamplers(0, 1, &m_LinearWrapSampleState);
+
+	m_LineShader.DrawLine(deviceContext, from, to, r, g, b, a);
+
+	return true;
+
+}
 
 bool ShaderManager::RenderFillGBufferShader(ID3D11DeviceContext* deviceContext, SceneObjectData ObjectData, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix)
 {
@@ -456,6 +621,8 @@ bool ShaderManager::RenderFillGBufferShader(ID3D11DeviceContext* deviceContext, 
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_LinearWrapSampleState);
+
 	result = m_DeferredFillGBufferShader.Render(deviceContext, ObjectData.ObjectRenderData.drawAmount, ObjectData.ObjectRenderData.start);
 	if (!result)
 	{
@@ -464,7 +631,6 @@ bool ShaderManager::RenderFillGBufferShader(ID3D11DeviceContext* deviceContext, 
 
 	return true;
 }
-
 
 bool ShaderManager::RenderSkyboxShader(ID3D11DeviceContext* deviceContext, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, DirectX::FXMVECTOR eyePosition)
 {
@@ -493,17 +659,16 @@ bool ShaderManager::RenderSkyboxShader(ID3D11DeviceContext* deviceContext, Direc
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_TestSampleState);
+
 	result = m_SkyboxShader.Render(deviceContext);
 	if (!result)
 	{
 		return false;
 	}
 
-
 	return true;
-
 }
-
 
 bool ShaderManager::ReloadIBLShader(ID3D11Device* device)
 {
@@ -519,7 +684,6 @@ bool ShaderManager::ReloadIBLShader(ID3D11Device* device)
 	return true;
 
 }
-
 
 bool ShaderManager::RenderForwardIBLShader(ID3D11DeviceContext* deviceContext, SceneObjectData ObjectData, DirectX::CXMMATRIX viewMatrix,
 	DirectX::CXMMATRIX projectionMatrix, DirectX::FXMVECTOR eyePosition, ImageBasedLightData IBLData)
@@ -550,6 +714,10 @@ bool ShaderManager::RenderForwardIBLShader(ID3D11DeviceContext* deviceContext, S
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_LinearWrapSampleState);
+	deviceContext->PSSetSamplers(1, 1, &m_AnsiotropicWrapSampleState);
+	deviceContext->PSSetSamplers(2, 1, &m_LinearClampSampleState);
+
 	result = m_IBLShader.RenderForward(deviceContext, ObjectData.ObjectRenderData.drawAmount, ObjectData.ObjectRenderData.start, IBLData.DiffuseProbe, IBLData.SpecularProbe, IBLData.SpecularIntegration);
 	if (!result)
 	{
@@ -561,8 +729,6 @@ bool ShaderManager::RenderForwardIBLShader(ID3D11DeviceContext* deviceContext, S
 
 }
 
-
-
 bool ShaderManager::RenderDeferredIBLShader(ID3D11DeviceContext* deviceContext, DeferredRenderData RenderData, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, ImageBasedLightData IBLData)
 {
 	bool result;
@@ -573,6 +739,10 @@ bool ShaderManager::RenderDeferredIBLShader(ID3D11DeviceContext* deviceContext, 
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_PointClampSampleState);
+	deviceContext->PSSetSamplers(1, 1, &m_AnsiotropicWrapSampleState);
+	deviceContext->PSSetSamplers(2, 1, &m_LinearClampSampleState);
+
 	result = m_IBLShader.RenderDeferred(deviceContext, IBLData.DiffuseProbe, IBLData.SpecularProbe, IBLData.SpecularIntegration);
 
 	if (!result)
@@ -582,7 +752,6 @@ bool ShaderManager::RenderDeferredIBLShader(ID3D11DeviceContext* deviceContext, 
 	return true;
 
 }
-
 
 bool ShaderManager::RenderForwardDirectionalLightShader(ID3D11DeviceContext* deviceContext, SceneObjectData ObjectData, DirectX::CXMMATRIX viewMatrix,
 	DirectX::CXMMATRIX projectionMatrix, DirectX::FXMVECTOR eyePosition, DirectionalLightData DirectionalLight)
@@ -613,6 +782,8 @@ bool ShaderManager::RenderForwardDirectionalLightShader(ID3D11DeviceContext* dev
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_LinearWrapSampleState);
+
 	result = m_DirectionalLightShader.RenderForward(deviceContext, ObjectData.ObjectRenderData.drawAmount, ObjectData.ObjectRenderData.start, DirectX::XMLoadFloat3(&DirectionalLight.AmbientLightDirection), DirectX::XMLoadFloat3(&DirectionalLight.AmbientLightColor), DirectX::XMLoadFloat3(&DirectionalLight.AmbientDown), DirectX::XMLoadFloat3(&DirectionalLight.AmbientUp));
 	if (!result)
 	{
@@ -624,7 +795,6 @@ bool ShaderManager::RenderForwardDirectionalLightShader(ID3D11DeviceContext* dev
 
 }
 
-
 bool ShaderManager::RenderDeferredDirectionalLightShader(ID3D11DeviceContext* deviceContext, DeferredRenderData RenderData, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, DirectionalLightData DirectionalLight)
 {
 	bool result;
@@ -635,6 +805,8 @@ bool ShaderManager::RenderDeferredDirectionalLightShader(ID3D11DeviceContext* de
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_PointClampSampleState);
+
 	result = m_DirectionalLightShader.RenderDeferred(deviceContext, DirectX::XMLoadFloat3(&DirectionalLight.AmbientLightDirection), DirectX::XMLoadFloat3(&DirectionalLight.AmbientLightColor), DirectX::XMLoadFloat3(&DirectionalLight.AmbientDown), DirectX::XMLoadFloat3(&DirectionalLight.AmbientUp));
 
 	if (!result)
@@ -644,7 +816,6 @@ bool ShaderManager::RenderDeferredDirectionalLightShader(ID3D11DeviceContext* de
 	return true;
 
 }
-
 
 bool ShaderManager::RenderForwardSpotLightShader(ID3D11DeviceContext* deviceContext, SceneObjectData ObjectData, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, DirectX::FXMVECTOR eyePosition, SpotLightData SpotLight)
 {
@@ -674,6 +845,7 @@ bool ShaderManager::RenderForwardSpotLightShader(ID3D11DeviceContext* deviceCont
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_LinearWrapSampleState);
 
 	result = m_SpotLightShader.RenderForward(deviceContext, ObjectData.ObjectRenderData.drawAmount, ObjectData.ObjectRenderData.start, DirectX::XMLoadFloat3(&SpotLight.SpotLightPosition), DirectX::XMLoadFloat3(&SpotLight.SpotLightColor), DirectX::XMLoadFloat3(&SpotLight.SpotLightDir), SpotLight.SpotLightRange, SpotLight.SpotLightInnerAngel, SpotLight.SpotLightOuterAngel);
 
@@ -686,7 +858,6 @@ bool ShaderManager::RenderForwardSpotLightShader(ID3D11DeviceContext* deviceCont
 
 }
 
-
 bool ShaderManager::RenderDeferredSpotLightShader(ID3D11DeviceContext* deviceContext, DeferredRenderData RenderData, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, SpotLightData SpotLight)
 {
 	bool result;
@@ -696,6 +867,8 @@ bool ShaderManager::RenderDeferredSpotLightShader(ID3D11DeviceContext* deviceCon
 	{
 		return false;
 	}
+	
+	deviceContext->PSSetSamplers(0, 1, &m_PointClampSampleState);
 
 	result = m_SpotLightShader.RenderDeferred(deviceContext, viewMatrix, projectionMatrix, DirectX::XMLoadFloat3(&SpotLight.SpotLightPosition), DirectX::XMLoadFloat3(&SpotLight.SpotLightColor), DirectX::XMLoadFloat3(&SpotLight.SpotLightDir), SpotLight.SpotLightRange, SpotLight.SpotLightInnerAngel, SpotLight.SpotLightOuterAngel);
 
@@ -706,7 +879,6 @@ bool ShaderManager::RenderDeferredSpotLightShader(ID3D11DeviceContext* deviceCon
 
 	return true;
 }
-
 
 bool ShaderManager::RenderForwardPointLightShader(ID3D11DeviceContext* deviceContext, SceneObjectData ObjectData, DirectX::CXMMATRIX viewMatrix,
 	DirectX::CXMMATRIX projectionMatrix, DirectX::FXMVECTOR eyePosition, PointLightData PointLight)
@@ -737,6 +909,8 @@ bool ShaderManager::RenderForwardPointLightShader(ID3D11DeviceContext* deviceCon
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_LinearWrapSampleState);
+
 	result = m_PointLightShader.RenderForward(deviceContext, ObjectData.ObjectRenderData.drawAmount, ObjectData.ObjectRenderData.start, DirectX::XMLoadFloat3(&PointLight.PointLightPosition), DirectX::XMLoadFloat3(&PointLight.PointLightColor), PointLight.PointLightRange);
 
 	if (!result)
@@ -746,7 +920,6 @@ bool ShaderManager::RenderForwardPointLightShader(ID3D11DeviceContext* deviceCon
 
 	return true;
 }
-
 
 bool ShaderManager::RenderDeferredPointLightShader(ID3D11DeviceContext* deviceContext, DeferredRenderData RenderData, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, PointLightData PointLight)
 {
@@ -758,6 +931,8 @@ bool ShaderManager::RenderDeferredPointLightShader(ID3D11DeviceContext* deviceCo
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_PointClampSampleState);
+
 	result = m_PointLightShader.RenderDeferred(deviceContext, viewMatrix, projectionMatrix, DirectX::XMLoadFloat3(&PointLight.PointLightPosition), DirectX::XMLoadFloat3(&PointLight.PointLightColor), PointLight.PointLightRange);
 
 	if (!result)
@@ -767,7 +942,6 @@ bool ShaderManager::RenderDeferredPointLightShader(ID3D11DeviceContext* deviceCo
 
 	return true;
 }
-
 
 bool ShaderManager::RenderForwardCapsuleLightShader(ID3D11DeviceContext* deviceContext, SceneObjectData ObjectData, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, DirectX::FXMVECTOR eyePosition, CapsuleLightData CapsuleLight)
 {
@@ -797,6 +971,8 @@ bool ShaderManager::RenderForwardCapsuleLightShader(ID3D11DeviceContext* deviceC
 		return false;
 	}
 
+	deviceContext->PSSetSamplers(0, 1, &m_LinearWrapSampleState);
+
 	result = m_CapsuleLightShader.RenderForward(deviceContext, ObjectData.ObjectRenderData.drawAmount, ObjectData.ObjectRenderData.start, DirectX::XMLoadFloat3(&CapsuleLight.CapsuleLightPosition), DirectX::XMLoadFloat3(&CapsuleLight.CapsuleLightColor), DirectX::XMLoadFloat3(&CapsuleLight.CapsuleLightDir), CapsuleLight.CapsuleLightLength, CapsuleLight.CapsuleLightRange);
 
 	if (!result)
@@ -807,7 +983,6 @@ bool ShaderManager::RenderForwardCapsuleLightShader(ID3D11DeviceContext* deviceC
 	return true;
 }
 
-
 bool ShaderManager::RenderDeferredCapsuleLightShader(ID3D11DeviceContext* deviceContext, DeferredRenderData RenderData, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, CapsuleLightData CapsuleLight)
 {
 	bool result;
@@ -817,6 +992,8 @@ bool ShaderManager::RenderDeferredCapsuleLightShader(ID3D11DeviceContext* device
 	{
 		return false;
 	}
+
+	deviceContext->PSSetSamplers(0, 1, &m_PointClampSampleState);
 
 	result = m_CapsuleLightShader.RenderDeferred(deviceContext, viewMatrix, projectionMatrix, DirectX::XMLoadFloat3(&CapsuleLight.CapsuleLightPosition), DirectX::XMLoadFloat3(&CapsuleLight.CapsuleLightColor), DirectX::XMLoadFloat3(&CapsuleLight.CapsuleLightDir), CapsuleLight.CapsuleLightLength, CapsuleLight.CapsuleLightRange);
 
@@ -829,33 +1006,4 @@ bool ShaderManager::RenderDeferredCapsuleLightShader(ID3D11DeviceContext* device
 }
 
 
-bool ShaderManager::RenderGBufferDebuggingShader(ID3D11DeviceContext* deviceContext, DeferredRenderData RenderData)
-{
-	bool result;
-
-	result = m_GBufferDebugShader.Render(deviceContext, RenderData.DepthData, RenderData.AlbedoRoughnesData, RenderData.NormalData, RenderData.F0Metalness);
-
-	if (!result)
-	{
-		return false;
-	}
-
-	return true;
-}
-
-bool ShaderManager::RenderLine(ID3D11DeviceContext* deviceContext, DirectX::CXMMATRIX viewMatrix, DirectX::CXMMATRIX projectionMatrix, DirectX::FXMVECTOR from, DirectX::FXMVECTOR to, int r, int g, int b, int a)
-{
-	bool result;
-
-	result = SetForwardShadingVSMatrixBuffer(deviceContext, DirectX::XMMatrixIdentity(), viewMatrix, projectionMatrix);
-	if (!result)
-	{
-		return false;
-	}
-
-	m_LineShader.DrawLine(deviceContext, from, to, r, g, b, a);
-
-	return true;
-	
-}
 

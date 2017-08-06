@@ -9,6 +9,7 @@
 #include <DirectXMath.h>
 #include <fstream>
 
+#include "ShaderHelper.h"
 
 class GBufferDebuggingShader
 {
@@ -33,7 +34,6 @@ public:
 private:
 	bool InitializeShader(ID3D11Device*, HWND, WCHAR*);
 	void ShutdownShader();
-	void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
 
 	bool SetShaderParameters(ID3D11DeviceContext*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*);
 	void RenderShader(ID3D11DeviceContext*);
@@ -41,7 +41,6 @@ private:
 private:
 	ID3D11VertexShader* m_vertexShader;
 	ID3D11PixelShader* m_pixelShader;
-	ID3D11SamplerState* m_sampleState;
 };
 
 #endif

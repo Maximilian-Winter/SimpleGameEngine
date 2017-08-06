@@ -12,18 +12,18 @@
     <Filter Include="Shader">
       <UniqueIdentifier>{eed331f0-1536-4847-9bff-80324077e277}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DDSUtil">
-      <UniqueIdentifier>{6ecd63d4-33ac-43d3-b50d-a7adb9ada7b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DDSUtil\DDSLoader">
-      <UniqueIdentifier>{a7b396ff-6b8b-4c3d-a2fd-8b50ee1e075d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DDSUtil\ScreenGrab">
-      <UniqueIdentifier>{f0c1e87e-d276-4c06-9c52-74ba984664a7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien\DDSUtil">
+      <UniqueIdentifier>{6ecd63d4-33ac-43d3-b50d-a7adb9ada7b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\DDSUtil\DDSLoader">
+      <UniqueIdentifier>{a7b396ff-6b8b-4c3d-a2fd-8b50ee1e075d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\DDSUtil\ScreenGrab">
+      <UniqueIdentifier>{f0c1e87e-d276-4c06-9c52-74ba984664a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,10 +34,10 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Source\DDSUtil\DDSTextureLoader\DDSTextureLoader.h">
-      <Filter>DDSUtil\DDSLoader</Filter>
+      <Filter>Headerdateien\DDSUtil\DDSLoader</Filter>
     </ClInclude>
     <ClInclude Include="Source\DDSUtil\ScreenGrab\ScreenGrab.h">
-      <Filter>DDSUtil\ScreenGrab</Filter>
+      <Filter>Headerdateien\DDSUtil\ScreenGrab</Filter>
     </ClInclude>
     <ClInclude Include="Source\Application.h">
       <Filter>Headerdateien</Filter>
@@ -132,12 +132,6 @@
     <ClInclude Include="Source\FrustumCulling.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CommandManager.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\CommandBase.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PointLightShader.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -162,6 +156,9 @@
     <ClInclude Include="Source\RigidBodys.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Source\ShaderHelper.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -171,10 +168,10 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Source\DDSUtil\DDSTextureLoader\DDSTextureLoader.cpp">
-      <Filter>DDSUtil\DDSLoader</Filter>
+      <Filter>Headerdateien\DDSUtil\DDSLoader</Filter>
     </ClCompile>
     <ClCompile Include="Source\DDSUtil\ScreenGrab\ScreenGrab.cpp">
-      <Filter>DDSUtil\ScreenGrab</Filter>
+      <Filter>Headerdateien\DDSUtil\ScreenGrab</Filter>
     </ClCompile>
     <ClCompile Include="Source\CapsuleLightShader.cpp">
       <Filter>Quelldateien</Filter>
@@ -269,12 +266,6 @@
     <ClCompile Include="Source\FrustumCulling.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CommandManager.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CommandBase.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Source\PointLightShader.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -297,6 +288,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Source\RigidBodys.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderHelper.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -134,17 +134,18 @@ private:
 	IBLShader m_IBLShader;
 	LineListShader m_LineShader;
 
-	ID3D11InputLayout* m_deferredLayout;
-	ID3D11SamplerState* m_deferredSampleState;
-
-	ID3D11InputLayout* m_forwardLayout;
-	ID3D11SamplerState* m_forwardSampleState;
-
 	ID3D11Buffer* m_forwardObjectVSBuffer;
 	ID3D11Buffer* m_forwardMaterialPSBuffer;
 	ID3D11Buffer* m_forwardEyePositionBuffer;
 
 	ID3D11Buffer* m_DeferredDataForUnpack;
+
+	ID3D11SamplerState* m_LinearWrapSampleState;
+	ID3D11SamplerState* m_LinearClampSampleState;
+	ID3D11SamplerState* m_AnsiotropicWrapSampleState;
+	ID3D11SamplerState* m_PointClampSampleState;
+
+	ID3D11SamplerState* m_TestSampleState;
 };
 
 #endif

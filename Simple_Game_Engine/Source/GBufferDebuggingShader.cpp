@@ -5,7 +5,6 @@ GBufferDebuggingShader::GBufferDebuggingShader()
 {
 	m_vertexShader = 0;
 	m_pixelShader = 0;
-	m_sampleState = 0;
 }
 
 
@@ -40,7 +39,7 @@ void GBufferDebuggingShader::Shutdown()
 	// Shutdown the vertex and pixel shaders as well as the related objects.
 	ShutdownShader();
 
-	return;
+	
 }
 
 
@@ -70,7 +69,6 @@ bool GBufferDebuggingShader::InitializeShader(ID3D11Device* device, HWND hwnd, W
 	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
-	D3D11_SAMPLER_DESC samplerDesc;
 
 	// Initialize the pointers this function will use to null.
 	errorMessage = 0;
@@ -84,7 +82,7 @@ bool GBufferDebuggingShader::InitializeShader(ID3D11Device* device, HWND hwnd, W
 		// If the shader failed to compile it should have writen something to the error message.
 		if(errorMessage)
 		{
-			OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
+			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
 		}
 		// If there was nothing in the error message then it simply could not find the shader file itself.
 		else
@@ -102,7 +100,7 @@ bool GBufferDebuggingShader::InitializeShader(ID3D11Device* device, HWND hwnd, W
 		// If the shader failed to compile it should have writen something to the error message.
 		if(errorMessage)
 		{
-			OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
+			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
 		}
 		// If there was nothing in the error message then it simply could not find the file itself.
 		else
@@ -134,44 +132,12 @@ bool GBufferDebuggingShader::InitializeShader(ID3D11Device* device, HWND hwnd, W
 	pixelShaderBuffer->Release();
 	pixelShaderBuffer = 0;
 
-	// Create a texture sampler state description.
-	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-	samplerDesc.MipLODBias = 0.0f;
-	samplerDesc.MaxAnisotropy = 1;
-	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-	samplerDesc.BorderColor[0] = 0;
-	samplerDesc.BorderColor[1] = 0;
-	samplerDesc.BorderColor[2] = 0;
-	samplerDesc.BorderColor[3] = 0;
-	samplerDesc.MinLOD = 0;
-	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-	// Create the texture sampler state.
-	result = device->CreateSamplerState(&samplerDesc, &m_sampleState);
-	if(FAILED(result))
-	{
-		return false;
-	}
-
-
-	
 	return true;
 }
 
 
 void GBufferDebuggingShader::ShutdownShader()
 {
-
-	// Release the sampler state.
-	if(m_sampleState)
-	{
-		m_sampleState->Release();
-		m_sampleState = 0;
-	}
-
 	// Release the pixel shader.
 	if(m_pixelShader)
 	{
@@ -185,51 +151,11 @@ void GBufferDebuggingShader::ShutdownShader()
 		m_vertexShader->Release();
 		m_vertexShader = 0;
 	}
-
-	return;
 }
-
-
-void GBufferDebuggingShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename)
-{
-	char* compileErrors;
-	unsigned long bufferSize, i;
-	std::ofstream fout;
-
-
-	// Get a pointer to the error message text buffer.
-	compileErrors = (char*)(errorMessage->GetBufferPointer());
-
-	// Get the length of the message.
-	bufferSize = errorMessage->GetBufferSize();
-
-	// Open a file to write the error message to.
-	fout.open("shader-error.txt");
-
-	// Write out the error message.
-	for(i=0; i<bufferSize; i++)
-	{
-		fout << compileErrors[i];
-	}
-
-	// Close the file.
-	fout.close();
-
-	// Release the error message.
-	errorMessage->Release();
-	errorMessage = 0;
-
-	// Pop a message up on the screen to notify the user to check the text file for compile errors.
-	MessageBox(hwnd, L"Error compiling shader.  Check shader-error.txt for message.", shaderFilename, MB_OK);
-
-	return;
-}
-
 
 bool GBufferDebuggingShader::SetShaderParameters(ID3D11DeviceContext* deviceContext, ID3D11ShaderResourceView* Depth, ID3D11ShaderResourceView* BaseColorSpecInt, ID3D11ShaderResourceView* Normal, 
 					   ID3D11ShaderResourceView* SpecPow)
 {
-
 	// Set shader texture resources in the pixel shader.
 	deviceContext->PSSetShaderResources(0, 1, &Depth);
 	deviceContext->PSSetShaderResources(1, 1, &BaseColorSpecInt);
@@ -241,9 +167,6 @@ bool GBufferDebuggingShader::SetShaderParameters(ID3D11DeviceContext* deviceCont
 
 void GBufferDebuggingShader::RenderShader(ID3D11DeviceContext* deviceContext)
 {
-
-	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
-
 	deviceContext->IASetInputLayout( NULL );
 	deviceContext->IASetVertexBuffers(0, 0, NULL, NULL, NULL);
 	deviceContext->IASetPrimitiveTopology( D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
@@ -258,8 +181,4 @@ void GBufferDebuggingShader::RenderShader(ID3D11DeviceContext* deviceContext)
 	deviceContext->VSSetShader(NULL, NULL, 0);
 	deviceContext->PSSetShader(NULL, NULL, 0);
 	deviceContext->IASetPrimitiveTopology( D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
-
-
-
-	return;
 }

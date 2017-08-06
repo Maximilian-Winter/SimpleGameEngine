@@ -14,7 +14,7 @@ SamplerState LinearSampler					: register(s0);
 /////////////////////////////////////////////////////////////////////////////
 struct VS_INPUT
 {
-	float4 Position	: POSITION;		// vertex position 
+	float3 Position	: POSITION;		// vertex position 
 	float2 UV		: TEXCOORD0;	// vertex texture coords 
 	float3 Normal	: NORMAL;		// vertex normal
 
@@ -54,6 +54,29 @@ cbuffer EyePositionPSBuffer					: register(b1) //Model PS Buffer
 
 
 /////////////////////////////////////////////////////////////////////////////
+// Vertex shader
+/////////////////////////////////////////////////////////////////////////////
+
+VS_OUTPUT ForwardLightningVertexShader(VS_INPUT VertexShaderInput)
+{
+	VS_OUTPUT output;
+	float4 pos4 = float4(VertexShaderInput.Position.xyz, 1.0f);
+	output.Position = mul(pos4, WorldViewProjection);
+	float3 position = VertexShaderInput.Position.xyz;
+	float2 texCoord = VertexShaderInput.UV;
+
+	float3 normal = normalize(mul(VertexShaderInput.Normal, (float3x3)World));
+	float3 worldPos = mul(float4(position.xyz, 1), World).xyz;
+	output.PositionInWorld = worldPos;
+	output.PositionInWorldViewProj = mul(float4(position.xyz, 1), WorldViewProjection);
+	output.UV = texCoord;
+	output.Normal = normal;
+
+	return output;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
 // Material preparation
 /////////////////////////////////////////////////////////////////////////////
 
@@ -77,8 +100,6 @@ float3x3 invert_3x3(float3x3 M)
 		cross(T[2], T[0]),
 		cross(T[0], T[1])) / (D + 1e-6);
 }
-
-
 
 float3 resolveNormal(VS_OUTPUT vertexShaderOut)
 {

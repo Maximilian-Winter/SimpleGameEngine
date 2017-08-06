@@ -156,6 +156,11 @@ bool UserInterface::RenderUI(ID2D1RenderTarget* D2DRenderTarget)
 
 		//Render text strings to display
 		D2DRenderTarget->DrawText(Text.c_str(), wcslen(Text.c_str()), TextFormat, UI_TextStrings[i].Rect.UI_LayoutRect, ColoredBrush);
+
+		TextFormat->Release();
+		TextFormat = 0;
+		ColoredBrush->Release();
+		ColoredBrush = 0;
 	}
 
 	for (int i = 0; i < UI_TemporaryTextStrings.size(); i++)
@@ -191,6 +196,11 @@ bool UserInterface::RenderUI(ID2D1RenderTarget* D2DRenderTarget)
 
 		//Render text strings to display
 		D2DRenderTarget->DrawText(Text.c_str(), wcslen(Text.c_str()), TextFormat, UI_TemporaryTextStrings[i].Rect.UI_LayoutRect, ColoredBrush);
+		
+		TextFormat->Release();
+		TextFormat = 0;
+		ColoredBrush->Release();
+		ColoredBrush = 0;
 	}
 
 	for (int i = 0; i < UI_TemporaryLines.size(); i++)
@@ -208,12 +218,17 @@ bool UserInterface::RenderUI(ID2D1RenderTarget* D2DRenderTarget)
 
 		// Render lines.
 		D2DRenderTarget->DrawLine(UI_TemporaryLines[i].point0, UI_TemporaryLines[i].point1, ColoredBrush);
+
+		ColoredBrush->Release();
+		ColoredBrush = 0;
 	}
 
 	D2DRenderTarget->EndDraw();
-
 	UI_TemporaryLines.clear();
 	UI_TemporaryTextStrings.clear();
+
+	writeFactory->Release();
+	writeFactory = 0;
 
 	return true;
 }
@@ -414,7 +429,6 @@ void UserInterface::AddTextString(std::string Text, std::string FontName, float 
 void UserInterface::AddTemporaryTextString(std::string Text, std::string FontName, float FontSize, float ColorR, float ColorG, float ColorB, DWRITE_FONT_WEIGHT FontWeight, DWRITE_FONT_STYLE FontStyle, DWRITE_FONT_STRETCH FontStretch, float TextBoxStartX, float TextBoxStartY, float Width, float Height)
 {
 	UI_TemporaryTextStrings.push_back(UI_Text(Text, FontName, FontSize, ColorR, ColorG, ColorB, FontWeight, FontStyle, FontStretch, TextBoxStartX, TextBoxStartY, Width, Height));
-
 }
 
 void UserInterface::AddTemporaryLine(float x1, float y1, float x2, float y2, float r, float g, float b)

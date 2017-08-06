@@ -32,7 +32,7 @@ Name = "Barrel"
 Mass = 5.0
 Position = {0.0, 1.0, 10.0}
 Rotation = {0.0, 0.0, 0.0, 0.0}
-Scale = {0.1, 0.1, 0.1}
+Scale = {1.0, 1.0, 1.0}
 
 [Cerberus]
 ObjectType = "StaticObject"
@@ -56,6 +56,18 @@ Mass = 2.5
 Position = {-4.5, 0.1, 10.0}
 Rotation = {0.0, 0.0, 0.0, 0.0}
 Scale = {1.0, 1.0, 1.0}
+
+[Pin201]
+ObjectType = "StaticObject"
+ModelFilename = "data/models/pin2.smo"
+CullingVolumeType = "CullSphere"
+CollisionBodyType = "CollisionMeshFile"
+Name = "Pin201"
+Mass = 2.5
+Position = {-4.5, 0.1, 12.5}
+Rotation = {0.0, 0.0, 0.0, 0.0}
+Scale = {1.0, 1.0, 1.0}
+
 
 [Pin02]
 ObjectType = "StaticObject"

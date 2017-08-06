@@ -14,6 +14,7 @@ Author: Maximilian Winter
 #include <DirectXMath.h>
 #include <fstream>
 
+#include "ShaderHelper.h"
 
 class DeferredShader
 {
@@ -31,7 +32,6 @@ public:
 private:
 	bool InitializeShader(ID3D11Device*, HWND, WCHAR*);
 	void ShutdownShader();
-	void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
 
 	void RenderShader(ID3D11DeviceContext*, int, int);
 
@@ -39,7 +39,6 @@ private:
 	ID3D11VertexShader* m_vertexShader;
 	ID3D11PixelShader* m_pixelShader;
 	ID3D11InputLayout* m_layout;
-	ID3D11SamplerState* m_sampleStateWrap;
 };
 
 #endif

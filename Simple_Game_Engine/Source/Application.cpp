@@ -113,7 +113,6 @@ bool Application::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, in
 
 	//Create Spot Light			posX,posY,posZ,dirX,dirY,dirZ,colR,colG,colB,ran,innerAngel,outerAngel
 	m_WorldSceneManager.GetLightManager().AddSpotLight(-10.0, 15.0, 10.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 0.15, 0.60);
-
 	//m_LightManager.AddSpotLight(-7.50, 10.0, 10.0, 0.0, -1.0, 0.0, 1.0, 0.0, 0.0, 20, 0.5, 0.60);
 	//m_LightManager.AddSpotLight(-10.0, 10.0, 15.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, 20, 0.5, 0.60);
 	//m_LightManager.AddSpotLight(-12.5, 10.0, 10.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0, 20, 0.5, 0.60);
@@ -139,9 +138,9 @@ bool Application::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, in
 	m_LightManager.AddPointLight(DirectX::XMVectorSet(15.5f, 0.0f, 15.0f, 0.0f), Color, 10);
 	m_LightManager.AddPointLight(DirectX::XMVectorSet(25.5f, 0.0f, 15.0f, 0.0f), Color, 10);
 	//Create Capsule Lights		   posX, posY, posZ, colR, colG, colB, dirX, dirY, dirZ, range, length
-	m_LightManager.AddCapsuleLight(-7.5, 1.0, 5.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 250, 20);
 	*/
-
+	//m_WorldSceneManager.GetLightManager().AddCapsuleLight(-7.5, 1.0, 5.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 250, 40);
+	m_WorldSceneManager.GetLightManager().AddSpotLight(-7.50, 1.0, 10.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 20, 0.5, 0.60);
 	m_WorldSceneManager.GetLightManager().AddImageBasedLight(m_D3D.GetDevice(), "data/IBL_CubeMaps/skymapDiffuseHDR.dds", "data/IBL_CubeMaps/skymapSpecularHDR.dds", "data/IBL_CubeMaps/skymapBrdf.dds", DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 0);
 
 	m_UserInterface.AddTextString("Created by Maximilian Winter 2015", "Seogoe UI", 20.0, 1.0f, 1.0f, 1.0f, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 10, screenHeight - 30, 400, 100);
@@ -220,7 +219,6 @@ bool Application::UpdateApplication()
 	{
 		return false;
 	}
-
 	return true;
 
 }
@@ -288,13 +286,13 @@ bool Application::UpdateWorld()
 			}
 
 
-			Force = DirectX::XMVectorSet(100.0f, 100.0f, 100.0f, 1.0f);
+			Force = DirectX::XMVectorSet(25.0f, 25.0f, 25.0f, 1.0f);
 			Force = m_Camera.GetLookAt() * Force;
 			m_WorldSceneManager.ApplyCentralImpulseToObject(name, Force);
 
 			modelCount++;
 
-			//m_DetectInputLastFrame = true;
+			m_DetectInputLastFrame = true;
 		}
 
 	
@@ -472,7 +470,7 @@ bool Application::Render()
 	{
 		return false;
 	}
-
+	
 	// Present the rendered scene to the screen.
 	m_D3D.EndScene();
 
@@ -912,13 +910,14 @@ bool Application::RenderSceneForward()
 		m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMLoadFloat3(&debugLine.from), DirectX::XMLoadFloat3(&debugLine.to), debugLine.color.x, debugLine.color.y, debugLine.color.z, 1.0f);
 	}
 	
-	m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(0.0f, -100.0f, 0.0, 0.0f), DirectX::XMVectorSet(0.0f, 100.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1.0f, 1.0f);
-
-	m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(-100.0f, 0.0f, 0.0, 0.0f), DirectX::XMVectorSet(100.0f, 0.0f, 0.0f, 0.0f), 1.0f, 0.0f, 0.0f, 1.0f);
-
-	m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(0.0f, 0.0f, -100.0, 0.0f), DirectX::XMVectorSet(0.0f, 0.0f, 100.0f, 0.0f), 0.0f, 1.0f, 0.0f, 1.0f);
-
 	*/
+
+	//m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(0.0f, -100.0f, 0.0, 0.0f), DirectX::XMVectorSet(0.0f, 100.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1.0f, 1.0f);
+
+	//m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(-100.0f, 0.0f, 0.0, 0.0f), DirectX::XMVectorSet(100.0f, 0.0f, 0.0f, 0.0f), 1.0f, 0.0f, 0.0f, 1.0f);
+
+	//m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(0.0f, 0.0f, -100.0, 0.0f), DirectX::XMVectorSet(0.0f, 0.0f, 100.0f, 0.0f), 0.0f, 1.0f, 0.0f, 1.0f);
+
 
 	debugLines.clear();
 

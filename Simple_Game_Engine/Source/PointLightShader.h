@@ -14,6 +14,7 @@ Date: 10.01.2015
 #include <DirectXMath.h>
 #include <fstream>
 
+#include "ShaderHelper.h"
 
 // Class name: LightShaderClass
 
@@ -54,10 +55,6 @@ private:
 	void ShutdownForwardShader();
 	void ShutdownDeferredShader();
 
-	void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
-
-	DirectX::XMFLOAT3 GammaToLinear(const DirectX::XMFLOAT3& color);
-
 	bool SetForwardPSLightningParameters(ID3D11DeviceContext*, DirectX::FXMVECTOR, DirectX::FXMVECTOR, float);
 	bool SetDeferredPSLightningParameters(ID3D11DeviceContext*, DirectX::FXMVECTOR, DirectX::FXMVECTOR, float, DirectX::CXMMATRIX, DirectX::CXMMATRIX);
 
@@ -69,15 +66,12 @@ private:
 	ID3D11PixelShader* m_DeferredPixelShader;
 	ID3D11HullShader* m_DeferredHullShader;
 	ID3D11DomainShader* m_DeferredDomainShader;
-	ID3D11InputLayout* m_DeferredLayout;
-	ID3D11SamplerState* m_DeferredSampleState;
 	ID3D11Buffer* m_DeferredLightBuffer;
 	ID3D11Buffer* m_DeferredPointLightScaleBuffer;
 
 	ID3D11VertexShader* m_forwardVertexShader;
 	ID3D11PixelShader* m_forwardPixelShader;
 	ID3D11InputLayout* m_forwardLayout;
-	ID3D11SamplerState* m_forwardSampleState;
 	ID3D11Buffer* m_forwardLightBuffer;
 
 

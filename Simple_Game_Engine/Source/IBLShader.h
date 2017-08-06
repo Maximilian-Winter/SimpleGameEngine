@@ -13,6 +13,8 @@ Date: 14.08.2015
 #include <DirectXMath.h>
 #include <fstream>
 
+#include "ShaderHelper.h"
+
 class IBLShader
 {
 	struct IBLCubemaps
@@ -46,8 +48,6 @@ private:
 
 	bool InitializeDeferredShader(ID3D11Device*, HWND, WCHAR*);
 
-	void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
-
 	bool SetForwardPSLightningParameters(ID3D11DeviceContext*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*);
 	bool SetDeferredPSLightningParameters(ID3D11DeviceContext*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*, ID3D11ShaderResourceView*);
 
@@ -60,14 +60,9 @@ private:
 	ID3D11VertexShader* m_forwardVertexShader;
 	ID3D11PixelShader* m_forwardPixelShader;
 	ID3D11InputLayout* m_forwardLayout;
-	ID3D11SamplerState* m_forwardSampleState;
 	
 	ID3D11VertexShader* m_deferredVertexShader;
 	ID3D11PixelShader* m_deferredPixelShader;
-	ID3D11SamplerState* m_deferredSampleState;
-
-	ID3D11SamplerState* m_AnisoSampleState;
-	ID3D11SamplerState* m_ClampSampleState;
 };
 
 #endif

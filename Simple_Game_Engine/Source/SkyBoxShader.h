@@ -14,6 +14,7 @@ Date: 14.01.2016
 #include <fstream>
 #include <vector>
 
+#include "ShaderHelper.h"
 #include "DDSUtil\DDSTextureLoader\DDSTextureLoader.h"
 
 class SkyboxShader
@@ -36,7 +37,6 @@ public:
 
 private:
 	bool InitializeShader(ID3D11Device*, HWND, WCHAR*);
-	void OutputShaderErrorMessage(ID3D10Blob*, HWND, WCHAR*);
 	bool SetShadingParameters(ID3D11DeviceContext*);
 	void RenderShader(ID3D11DeviceContext*);
 
@@ -52,7 +52,6 @@ private:
 	ID3D11VertexShader* m_VertexShader;
 	ID3D11PixelShader* m_PixelShader;
 	ID3D11InputLayout* m_Layout;
-	ID3D11SamplerState* m_SampleState;
 };
 
 #endif

@@ -6,7 +6,6 @@ LineListShader::LineListShader()
 	m_vertexShader = 0;
 	m_pixelShader = 0;
 	m_layout = 0;
-	m_sampleState = 0;
 	m_vertexBuffer = 0;
 
 }
@@ -42,7 +41,7 @@ void LineListShader::Shutdown()
 	// Shutdown the vertex and pixel shaders as well as the related objects.
 	ShutdownShader();
 
-	return;
+	
 }
 
 
@@ -54,7 +53,6 @@ bool LineListShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* fo
 	ID3D10Blob* pixelShaderBuffer;
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
 	unsigned int numElements;
-	D3D11_SAMPLER_DESC samplerDesc;
 	D3D11_BUFFER_DESC vertexBufferDesc;
 
 
@@ -70,7 +68,7 @@ bool LineListShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* fo
 		// If the shader failed to compile it should have writen something to the error message.
 		if (errorMessage)
 		{
-			OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
+			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
 		}
 		// If there was nothing in the error message then it simply could not find the shader file itself.
 		else
@@ -88,7 +86,7 @@ bool LineListShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* fo
 		// If the shader failed to compile it should have writen something to the error message.
 		if (errorMessage)
 		{
-			OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
+			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
 		}
 		// If there was nothing in the error message then it simply could not find the file itself.
 		else
@@ -150,28 +148,6 @@ bool LineListShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* fo
 	pixelShaderBuffer->Release();
 	pixelShaderBuffer = 0;
 
-	// Create a texture sampler state description.
-	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-	samplerDesc.MipLODBias = 0.0f;
-	samplerDesc.MaxAnisotropy = 1;
-	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
-	samplerDesc.BorderColor[0] = 0;
-	samplerDesc.BorderColor[1] = 0;
-	samplerDesc.BorderColor[2] = 0;
-	samplerDesc.BorderColor[3] = 0;
-	samplerDesc.MinLOD = 0;
-	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
-
-	// Create the texture sampler state.
-	result = device->CreateSamplerState(&samplerDesc, &m_sampleState);
-	if (FAILED(result))
-	{
-		return false;
-	}
-
 	// Setup the description of the light dynamic constant buffer that is in the pixel shader.
 	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	vertexBufferDesc.ByteWidth = 2 * sizeof(ColoredPointBufferType);
@@ -190,14 +166,16 @@ bool LineListShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* fo
 	return true;
 }
 
-void LineListShader::DrawLine(ID3D11DeviceContext* deviceContext, DirectX::FXMVECTOR from, DirectX::FXMVECTOR to, int r, int g, int b, int a)
+bool LineListShader::DrawLine(ID3D11DeviceContext* deviceContext, DirectX::FXMVECTOR from, DirectX::FXMVECTOR to, int r, int g, int b, int a)
 {
 	ColoredPointBufferType* v = NULL;
 
 	D3D11_MAPPED_SUBRESOURCE mapData;
 
 	if (FAILED(deviceContext->Map(m_vertexBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &mapData)))
-		return;
+	{
+		return false;
+	}
 
 	v = (ColoredPointBufferType*)mapData.pData;
 	
@@ -230,9 +208,6 @@ void LineListShader::DrawLine(ID3D11DeviceContext* deviceContext, DirectX::FXMVE
 	deviceContext->VSSetShader(m_vertexShader, NULL, 0);
 	deviceContext->PSSetShader(m_pixelShader, NULL, 0);
 
-	// Set the sampler states in the pixel shader.
-	deviceContext->PSSetSamplers(0, 1, &m_sampleState);
-
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 
 	deviceContext->Draw(2, 0);
@@ -263,54 +238,11 @@ void LineListShader::ShutdownShader()
 		m_layout = 0;
 	}
 
-	if (m_sampleState)
-	{
-		m_sampleState->Release();
-		m_sampleState = 0;
-	}
-
 	if (m_vertexBuffer)
 	{
 		m_vertexBuffer->Release();
 		m_vertexBuffer = 0;
 	}
 
-	return;
+	
 }
-
-
-void LineListShader::OutputShaderErrorMessage(ID3D10Blob* errorMessage, HWND hwnd, WCHAR* shaderFilename)
-{
-	char* compileErrors;
-	unsigned long bufferSize, i;
-	std::ofstream fout;
-
-
-	// Get a pointer to the error message text buffer.
-	compileErrors = (char*)(errorMessage->GetBufferPointer());
-
-	// Get the length of the message.
-	bufferSize = errorMessage->GetBufferSize();
-
-	// Open a file to write the error message to.
-	fout.open("shader-error.txt");
-
-	// Write out the error message.
-	for(i=0; i<bufferSize; i++)
-	{
-		fout << compileErrors[i];
-	}
-
-	// Close the file.
-	fout.close();
-
-	// Release the error message.
-	errorMessage->Release();
-	errorMessage = 0;
-
-	// Pop a message up on the screen to notify the user to check the text file for compile errors.
-	MessageBox(hwnd, L"Error compiling shader.  Check shader-error.txt for message.", shaderFilename, MB_OK);
-
-	return;
-}
-
