@@ -40,6 +40,122 @@ DirectX::XMFLOAT3 ShaderHelper::GammaToLinear(const DirectX::XMFLOAT3 & color)
 	return DirectX::XMFLOAT3(color.x * color.x, color.y * color.y, color.z * color.z);
 }
 
+HRESULT ShaderHelper::CompileShader(ID3D11Device * device, HWND hwnd, WCHAR * shaderFilename, LPCSTR shaderEntryPoint, LPCSTR shaderTarget, ID3D10Blob ** pShaderBuffer)
+{
+	HRESULT result;
+	ID3D10Blob* errorMessage;
+	// Compile the vertex shader code.
+	result = D3DCompileFromFile(shaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, shaderEntryPoint, shaderTarget, D3D10_SHADER_ENABLE_STRICTNESS, 0, pShaderBuffer, &errorMessage);
+	if (FAILED(result))
+	{
+		// If the shader failed to compile it should have writen something to the error message.
+		if (errorMessage)
+		{
+			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, shaderFilename);
+		}
+		// If there was nothing in the error message then it simply could not find the shader file itself.
+		else
+		{
+			MessageBox(hwnd, shaderFilename, L"Shader Compiler Error", MB_OK);
+		}
+
+		return result;
+	}
+
+	return result;
+}
+
+HRESULT ShaderHelper::CreateVertexShader(ID3D11Device* device, HWND hwnd, WCHAR* shaderFilename, LPCSTR shaderEntryPoint, ID3D10Blob** pVertexShaderBuffer, ID3D11VertexShader** pVertexShader)
+{
+	HRESULT result;
+	result = CompileShader(device, hwnd, shaderFilename, shaderEntryPoint, "vs_5_0", pVertexShaderBuffer);
+	if (FAILED(result))
+	{
+		return result;
+	}
+
+	result = device->CreateVertexShader((*pVertexShaderBuffer)->GetBufferPointer(), (*pVertexShaderBuffer)->GetBufferSize(), NULL, pVertexShader);
+	if (FAILED(result))
+	{
+		return result;
+	}
+
+	return result;
+}
+
+HRESULT ShaderHelper::CreatePixelShader(ID3D11Device * device, HWND hwnd, WCHAR * shaderFilename, LPCSTR shaderEntryPoint, ID3D10Blob ** pPixelShaderBuffer, ID3D11PixelShader** pPixelShader)
+{
+	HRESULT result;
+	result = CompileShader(device, hwnd, shaderFilename, shaderEntryPoint, "ps_5_0", pPixelShaderBuffer);
+	if (FAILED(result))
+	{
+		return result;
+	}
+
+	result = device->CreatePixelShader((*pPixelShaderBuffer)->GetBufferPointer(), (*pPixelShaderBuffer)->GetBufferSize(), NULL, pPixelShader);
+	if (FAILED(result))
+	{
+		return result;
+	}
+
+	return result;
+}
+
+HRESULT ShaderHelper::CreateHullShader(ID3D11Device * device, HWND hwnd, WCHAR * shaderFilename, LPCSTR shaderEntryPoint, ID3D10Blob ** pHullShaderBuffer, ID3D11HullShader ** pHullShader)
+{
+	HRESULT result;
+	result = CompileShader(device, hwnd, shaderFilename, shaderEntryPoint, "hs_5_0", pHullShaderBuffer);
+	if (FAILED(result))
+	{
+		return result;
+	}
+
+	result = device->CreateHullShader((*pHullShaderBuffer)->GetBufferPointer(), (*pHullShaderBuffer)->GetBufferSize(), NULL, pHullShader);
+	if (FAILED(result))
+	{
+		return result;
+	}
+
+	return result;
+}
+
+HRESULT ShaderHelper::CreateDomainShader(ID3D11Device * device, HWND hwnd, WCHAR * shaderFilename, LPCSTR shaderEntryPoint, ID3D10Blob ** pDomainShaderBuffer, ID3D11DomainShader ** pDomainShader)
+{
+	HRESULT result;
+	result = CompileShader(device, hwnd, shaderFilename, shaderEntryPoint, "ds_5_0", pDomainShaderBuffer);
+	if (FAILED(result))
+	{
+		return result;
+	}
+
+	result = device->CreateDomainShader((*pDomainShaderBuffer)->GetBufferPointer(), (*pDomainShaderBuffer)->GetBufferSize(), NULL, pDomainShader);
+	if (FAILED(result))
+	{
+		return result;
+	}
+
+	return result;
+}
+
+HRESULT ShaderHelper::CreateConstantBuffer(ID3D11Device* device, D3D11_USAGE bufferUsage, UINT byteWidth, D3D11_BIND_FLAG bindFlag, D3D11_CPU_ACCESS_FLAG accessFlag, UINT miscFlags, UINT byteStride, ID3D11Buffer** buffer)
+{
+	HRESULT result;
+
+	D3D11_BUFFER_DESC bufferDesc;
+	// Setup the description of the light dynamic constant buffer that is in the pixel shader.
+	bufferDesc.Usage = bufferUsage;
+	bufferDesc.ByteWidth = byteWidth;
+	bufferDesc.BindFlags = bindFlag;
+	bufferDesc.CPUAccessFlags = accessFlag;
+	bufferDesc.MiscFlags = miscFlags;
+	bufferDesc.StructureByteStride = byteStride;
+
+	// Create the constant buffer pointer so we can access the pixel shader constant buffer from within this class.
+	result = device->CreateBuffer(&bufferDesc, NULL, buffer);
+
+	return result;
+}
+
 HRESULT ShaderHelper::CreateInputLayoutDescFromVertexShaderSignature(ID3DBlob * pShaderBlob, ID3D11Device * pD3DDevice, ID3D11InputLayout ** pInputLayout)
 {
 	// Reflect shader info

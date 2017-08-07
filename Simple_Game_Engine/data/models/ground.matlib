@@ -1,7 +1,7 @@
 
 [ground01]
 f0 = 0.06
-render_forward = true
+render_forward = false
 albedo_map = "data/models/cwhite.dds"
 roughness_map = "data/models/white.dds"
 metalness_map = "data/models/defaultMetalness.dds"

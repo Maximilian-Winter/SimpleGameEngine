@@ -23,60 +23,16 @@ IBLShader::~IBLShader()
 bool IBLShader::InitializeForwardShader(ID3D11Device* device, HWND hwnd, WCHAR* forwardShaderFilename)
 {
 	HRESULT result;
-	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
 
-	// Initialize the pointers this function will use to null.
-	errorMessage = 0;
-	vertexShaderBuffer = 0;
-	pixelShaderBuffer = 0;
-
-	// Compile the vertex shader code.
-	result = D3DCompileFromFile(forwardShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "ForwardLightningVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, forwardShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Compile the pixel shader code.
-	result = D3DCompileFromFile(forwardShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "ForwardIBLPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the file itself.
-		else
-		{
-			MessageBox(hwnd, forwardShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Create the vertex shader from the buffer.
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_forwardVertexShader);
+	result = ShaderHelper::CreateVertexShader(device, hwnd, forwardShaderFilename, "ForwardLightningVertexShader", &vertexShaderBuffer, &m_forwardVertexShader);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Create the pixel shader from the buffer.
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_forwardPixelShader);
+	result = ShaderHelper::CreatePixelShader(device, hwnd, forwardShaderFilename, "ForwardIBLPixelShader", &pixelShaderBuffer, &m_forwardPixelShader);
 	if (FAILED(result))
 	{
 		return false;
@@ -88,7 +44,6 @@ bool IBLShader::InitializeForwardShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 		return false;
 	}
 
-	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
 	vertexShaderBuffer->Release();
 	vertexShaderBuffer = 0;
 
@@ -100,66 +55,21 @@ bool IBLShader::InitializeForwardShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 bool IBLShader::InitializeDeferredShader(ID3D11Device* device, HWND hwnd, WCHAR* deferredShaderFilename)
 {
 	HRESULT result;
-	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
 
-	// Initialize the pointers this function will use to null.
-	errorMessage = 0;
-	vertexShaderBuffer = 0;
-	pixelShaderBuffer = 0;
-
-	// Compile the vertex shader code.
-	result = D3DCompileFromFile(deferredShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "DeferredIBLVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, deferredShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, deferredShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Compile the pixel shader code.
-	result = D3DCompileFromFile(deferredShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "DeferredIBLPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, deferredShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the file itself.
-		else
-		{
-			MessageBox(hwnd, deferredShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Create the vertex shader from the buffer.
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_deferredVertexShader);
+	result = ShaderHelper::CreateVertexShader(device, hwnd, deferredShaderFilename, "DeferredIBLVertexShader", &vertexShaderBuffer, &m_deferredVertexShader);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Create the pixel shader from the buffer.
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_deferredPixelShader);
+	result = ShaderHelper::CreatePixelShader(device, hwnd, deferredShaderFilename, "DeferredIBLPixelShader", &pixelShaderBuffer, &m_deferredPixelShader);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
 	vertexShaderBuffer->Release();
 	vertexShaderBuffer = 0;
 

@@ -88,61 +88,16 @@ bool DirectionalLightShader::RenderDeferred(ID3D11DeviceContext* deviceContext, 
 bool DirectionalLightShader::InitializeForwardShader(ID3D11Device* device, HWND hwnd, WCHAR* forwardShaderFilename)
 {
 	HRESULT result;
-	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
-	D3D11_BUFFER_DESC lightBufferDesc;
 
-	// Initialize the pointers this function will use to null.
-	errorMessage = 0;
-	vertexShaderBuffer = 0;
-	pixelShaderBuffer = 0;
-
-	// Compile the vertex shader code.
-	result = D3DCompileFromFile(forwardShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "ForwardLightningVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, forwardShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Compile the pixel shader code.
-	result = D3DCompileFromFile(forwardShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "ForwardDirectionalLightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the file itself.
-		else
-		{
-			MessageBox(hwnd, forwardShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Create the vertex shader from the buffer.
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_forwardVertexShader);
+	result = ShaderHelper::CreateVertexShader(device, hwnd, forwardShaderFilename, "ForwardLightningVertexShader", &vertexShaderBuffer, &m_forwardVertexShader);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Create the pixel shader from the buffer.
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_forwardPixelShader);
+	result = ShaderHelper::CreatePixelShader(device, hwnd, forwardShaderFilename, "ForwardDirectionalLightPixelShader", &pixelShaderBuffer, &m_forwardPixelShader);
 	if (FAILED(result))
 	{
 		return false;
@@ -154,27 +109,17 @@ bool DirectionalLightShader::InitializeForwardShader(ID3D11Device* device, HWND 
 		return false;
 	}
 
-	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
+	result = ShaderHelper::CreateConstantBuffer(device, D3D11_USAGE_DYNAMIC, sizeof(LightBufferType), D3D11_BIND_CONSTANT_BUFFER, D3D11_CPU_ACCESS_WRITE, 0, 0, &m_forwardLightBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
 	vertexShaderBuffer->Release();
 	vertexShaderBuffer = 0;
 
 	pixelShaderBuffer->Release();
 	pixelShaderBuffer = 0;
-
-	// Setup the description of the light dynamic constant buffer that is in the pixel shader.
-	lightBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	lightBufferDesc.ByteWidth = sizeof(LightBufferType);
-	lightBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	lightBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	lightBufferDesc.MiscFlags = 0;
-	lightBufferDesc.StructureByteStride = 0;
-
-	// Create the constant buffer pointer so we can access the pixel shader constant buffer from within this class.
-	result = device->CreateBuffer(&lightBufferDesc, NULL, &m_forwardLightBuffer);
-	if (FAILED(result))
-	{
-		return false;
-	}
 
 	return true;
 }
@@ -182,89 +127,33 @@ bool DirectionalLightShader::InitializeForwardShader(ID3D11Device* device, HWND 
 bool DirectionalLightShader::InitializeDeferredShader(ID3D11Device* device, HWND hwnd, WCHAR* deferredShaderFilename)
 {
 	HRESULT result;
-	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
-	D3D11_BUFFER_DESC lightBufferDesc;
 
-
-	// Initialize the pointers this function will use to null.
-	errorMessage = 0;
-	vertexShaderBuffer = 0;
-	pixelShaderBuffer = 0;
-
-	// Compile the vertex shader code.
-	result = D3DCompileFromFile(deferredShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "DeferredDirectionalLightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if(FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, deferredShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, deferredShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Compile the pixel shader code.
-	result = D3DCompileFromFile(deferredShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "DeferredDirectionalLightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if(FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, deferredShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the file itself.
-		else
-		{
-			MessageBox(hwnd, deferredShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Create the vertex shader from the buffer.
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_deferredVertexShader);
-	if(FAILED(result))
+	result = ShaderHelper::CreateVertexShader(device, hwnd, deferredShaderFilename, "DeferredDirectionalLightVertexShader", &vertexShaderBuffer, &m_deferredVertexShader);
+	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Create the pixel shader from the buffer.
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_deferredPixelShader);
-	if(FAILED(result))
+	result = ShaderHelper::CreatePixelShader(device, hwnd, deferredShaderFilename, "DeferredDirectionalLightPixelShader", &pixelShaderBuffer, &m_deferredPixelShader);
+	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
+	result = ShaderHelper::CreateConstantBuffer(device, D3D11_USAGE_DYNAMIC, sizeof(LightBufferType), D3D11_BIND_CONSTANT_BUFFER, D3D11_CPU_ACCESS_WRITE, 0, 0, &m_deferredLightBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
 	vertexShaderBuffer->Release();
 	vertexShaderBuffer = 0;
 
 	pixelShaderBuffer->Release();
 	pixelShaderBuffer = 0;
 
-	// Setup the description of the light dynamic constant buffer that is in the pixel shader.
-	lightBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	lightBufferDesc.ByteWidth = sizeof(LightBufferType);
-	lightBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	lightBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	lightBufferDesc.MiscFlags = 0;
-	lightBufferDesc.StructureByteStride = 0;
-
-	// Create the constant buffer pointer so we can access the pixel shader constant buffer from within this class.
-	result = device->CreateBuffer(&lightBufferDesc, NULL, &m_deferredLightBuffer);
-	if(FAILED(result))
-	{
-		return false;
-	}
-	
 	return true;
 }
 
@@ -277,20 +166,16 @@ void DirectionalLightShader::ShutdownForwardShader()
 		m_forwardVertexShader->Release();
 		m_forwardVertexShader = 0;
 	}
-
-	
 	if (m_forwardPixelShader)
 	{
 		m_forwardPixelShader->Release();
 		m_forwardPixelShader = 0;
 	}
-
 	if (m_forwardLayout)
 	{
 		m_forwardLayout->Release();
 		m_forwardLayout = 0;
 	}
-	
 	if (m_forwardLightBuffer)
 	{
 		m_forwardLightBuffer->Release();
@@ -300,30 +185,21 @@ void DirectionalLightShader::ShutdownForwardShader()
 
 void DirectionalLightShader::ShutdownDeferredShader()
 {
-
-
-	// Release the light constant buffer.
 	if (m_deferredLightBuffer)
 	{
 		m_deferredLightBuffer->Release();
 		m_deferredLightBuffer = 0;
 	}
-
-	// Release the pixel shader.
 	if (m_deferredPixelShader)
 	{
 		m_deferredPixelShader->Release();
 		m_deferredPixelShader = 0;
 	}
-
-	// Release the vertex shader.
 	if (m_deferredVertexShader)
 	{
 		m_deferredVertexShader->Release();
 		m_deferredVertexShader = 0;
 	}
-
-	
 }
 
 bool DirectionalLightShader::SetForwardPSLightningParameters(ID3D11DeviceContext* deviceContext, DirectX::FXMVECTOR lightDirection, DirectX::FXMVECTOR lightColor, DirectX::FXMVECTOR AmbientDown, DirectX::CXMVECTOR AmbientUp)

@@ -98,61 +98,16 @@ bool PointLightShader::RenderDeferred(ID3D11DeviceContext* deviceContext, Direct
 bool PointLightShader::InitializeForwardShader(ID3D11Device* device, HWND hwnd, WCHAR* forwardShaderFilename)
 {
 	HRESULT result;
-	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
-	D3D11_BUFFER_DESC lightBufferDesc;
 
-	// Initialize the pointers this function will use to null.
-	errorMessage = 0;
-	vertexShaderBuffer = 0;
-	pixelShaderBuffer = 0;
-
-	// Compile the vertex shader code.
-	result = D3DCompileFromFile(forwardShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "ForwardLightningVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, forwardShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Compile the pixel shader code.
-	result = D3DCompileFromFile(forwardShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "ForwardPointLightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the file itself.
-		else
-		{
-			MessageBox(hwnd, forwardShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Create the vertex shader from the buffer.
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_forwardVertexShader);
+	result = ShaderHelper::CreateVertexShader(device, hwnd, forwardShaderFilename, "ForwardLightningVertexShader", &vertexShaderBuffer, &m_forwardVertexShader);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Create the pixel shader from the buffer.
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_forwardPixelShader);
+	result = ShaderHelper::CreatePixelShader(device, hwnd, forwardShaderFilename, "ForwardPointLightPixelShader", &pixelShaderBuffer, &m_forwardPixelShader);
 	if (FAILED(result))
 	{
 		return false;
@@ -164,27 +119,17 @@ bool PointLightShader::InitializeForwardShader(ID3D11Device* device, HWND hwnd, 
 		return false;
 	}
 
-	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
+	result = ShaderHelper::CreateConstantBuffer(device, D3D11_USAGE_DYNAMIC, sizeof(LightBufferType), D3D11_BIND_CONSTANT_BUFFER, D3D11_CPU_ACCESS_WRITE, 0, 0, &m_forwardLightBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
 	vertexShaderBuffer->Release();
 	vertexShaderBuffer = 0;
 
 	pixelShaderBuffer->Release();
 	pixelShaderBuffer = 0;
-
-	// Setup the description of the light dynamic constant buffer that is in the pixel shader.
-	lightBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	lightBufferDesc.ByteWidth = sizeof(LightBufferType);
-	lightBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	lightBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	lightBufferDesc.MiscFlags = 0;
-	lightBufferDesc.StructureByteStride = 0;
-
-	// Create the constant buffer pointer so we can access the pixel shader constant buffer from within this class.
-	result = device->CreateBuffer(&lightBufferDesc, NULL, &m_forwardLightBuffer);
-	if (FAILED(result))
-	{
-		return false;
-	}
 
 	return true;
 }
@@ -194,122 +139,48 @@ bool PointLightShader::InitializeDeferredShader(ID3D11Device* device, HWND hwnd,
 {
 	HRESULT result;
 
-	ID3D10Blob* errorMessage;
-
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
 	ID3D10Blob* hullShaderBuffer;
 	ID3D10Blob* domainShaderBuffer;
-	D3D11_BUFFER_DESC lightBufferDesc;
-	D3D11_BUFFER_DESC PointLightScaleDesc;
 
 
-	// Initialize the pointers this function will use to null.
-	errorMessage = 0;
-	vertexShaderBuffer = 0;
-	pixelShaderBuffer = 0;
-
-    // Compile the vertex shader code.
-	result = D3DCompileFromFile(hlslFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "DeferredPointLightVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if(FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, hlslFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	result = D3DCompileFromFile(hlslFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "DeferredPointLightHullShader", "hs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &hullShaderBuffer, &errorMessage);
-	if(FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, hlslFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	result = D3DCompileFromFile(hlslFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "DeferredPointLightDomainShader", "ds_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &domainShaderBuffer, &errorMessage);
-	if(FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, hlslFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-    // Compile the pixel shader code.
-	result = D3DCompileFromFile(hlslFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "DeferredPointLightPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if(FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the file itself.
-		else
-		{
-			MessageBox(hwnd, hlslFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Create the vertex shader from the buffer.
-    result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_DeferredVertexShader);
-	if(FAILED(result))
+	result = ShaderHelper::CreateVertexShader(device, hwnd, hlslFilename, "DeferredPointLightVertexShader", &vertexShaderBuffer, &m_DeferredVertexShader);
+	if (FAILED(result))
 	{
 		return false;
 	}
 
-	result = device->CreateHullShader(hullShaderBuffer->GetBufferPointer(), hullShaderBuffer->GetBufferSize(), NULL, &m_DeferredHullShader);
-	if(FAILED(result))
-	{
-		return false;
-	}
- 
-	
-	result = device->CreateDomainShader(domainShaderBuffer->GetBufferPointer(), domainShaderBuffer->GetBufferSize(), NULL, &m_DeferredDomainShader);
-	if(FAILED(result))
-	{
-		return false;
-	}
- 
- 
-    // Create the pixel shader from the buffer.
-    result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_DeferredPixelShader);
-	if(FAILED(result))
+	result = ShaderHelper::CreateHullShader(device, hwnd, hlslFilename, "DeferredPointLightHullShader", &hullShaderBuffer, &m_DeferredHullShader);
+	if (FAILED(result))
 	{
 		return false;
 	}
 
+	result = ShaderHelper::CreateDomainShader(device, hwnd, hlslFilename, "DeferredPointLightDomainShader", &domainShaderBuffer, &m_DeferredDomainShader);
+	if (FAILED(result))
+	{
+		return false;
+	}
 
+	result = ShaderHelper::CreatePixelShader(device, hwnd, hlslFilename, "DeferredPointLightPixelShader", &pixelShaderBuffer, &m_DeferredPixelShader);
+	if (FAILED(result))
+	{
+		return false;
+	}
 
-	// Release the shader buffers since they are no longer needed.
+	result = ShaderHelper::CreateConstantBuffer(device, D3D11_USAGE_DYNAMIC, sizeof(LightBufferType), D3D11_BIND_CONSTANT_BUFFER, D3D11_CPU_ACCESS_WRITE, 0, 0, &m_DeferredLightBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	result = ShaderHelper::CreateConstantBuffer(device, D3D11_USAGE_DYNAMIC, sizeof(PointLightScaleMatrix), D3D11_BIND_CONSTANT_BUFFER, D3D11_CPU_ACCESS_WRITE, 0, 0, &m_DeferredPointLightScaleBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
 	vertexShaderBuffer->Release();
 	vertexShaderBuffer = 0;
 
@@ -322,117 +193,67 @@ bool PointLightShader::InitializeDeferredShader(ID3D11Device* device, HWND hwnd,
 	domainShaderBuffer->Release();
 	domainShaderBuffer = 0;
 
-	// Setup the description of the light dynamic constant buffer that is in the pixel shader.
-	lightBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	lightBufferDesc.ByteWidth = sizeof(LightBufferType);
-	lightBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	lightBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	lightBufferDesc.MiscFlags = 0;
-	lightBufferDesc.StructureByteStride = 0;
-
-	// Create the constant buffer pointer so we can access the pixel shader constant buffer from within this class.
-	result = device->CreateBuffer(&lightBufferDesc, NULL, &m_DeferredLightBuffer);
-	if(FAILED(result))
-	{
-		return false;
-	}
-
-	PointLightScaleDesc.Usage = D3D11_USAGE_DYNAMIC;
-	PointLightScaleDesc.ByteWidth = sizeof(PointLightScaleMatrix);
-	PointLightScaleDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	PointLightScaleDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	PointLightScaleDesc.MiscFlags = 0;
-	PointLightScaleDesc.StructureByteStride = 0;
-
-	// Create the constant buffer pointer so we can access the pixel shader constant buffer from within this class.
-	result = device->CreateBuffer(&PointLightScaleDesc, NULL, &m_DeferredPointLightScaleBuffer);
-	if(FAILED(result))
-	{
-		return false;
-	}
-
-
 	return true;
 }
 
 
 void PointLightShader::ShutdownForwardShader()
 {
-
-	// Release all directx elemnts
-
 	if (m_forwardVertexShader)
 	{
 		m_forwardVertexShader->Release();
 		m_forwardVertexShader = 0;
 	}
-
-
 	if (m_forwardPixelShader)
 	{
 		m_forwardPixelShader->Release();
 		m_forwardPixelShader = 0;
 	}
-
 	if (m_forwardLayout)
 	{
 		m_forwardLayout->Release();
 		m_forwardLayout = 0;
 	}
-
 	if (m_forwardLightBuffer)
 	{
 		m_forwardLightBuffer->Release();
 		m_forwardLightBuffer = 0;
 	}
-
-	
 }
 
 
 void PointLightShader::ShutdownDeferredShader()
 {
-
-	// Release the light constant buffer.
 	if(m_DeferredLightBuffer)
 	{
 		m_DeferredLightBuffer->Release();
 		m_DeferredLightBuffer = 0;
 	}
-
-	//Release Point Light Scale Buffer
 	if(m_DeferredPointLightScaleBuffer)
 	{
 		m_DeferredPointLightScaleBuffer->Release();
 		m_DeferredPointLightScaleBuffer = 0;
 	}
-
-	// Release the pixel shader.
 	if(m_DeferredPixelShader)
 	{
 		m_DeferredPixelShader->Release();
 		m_DeferredPixelShader = 0;
 	}
-
-	// Release the vertex shader.
 	if(m_DeferredVertexShader)
 	{
 		m_DeferredVertexShader->Release();
 		m_DeferredVertexShader = 0;
 	}
-
 	if(m_DeferredHullShader)
 	{
 		m_DeferredHullShader->Release();
 		m_DeferredHullShader = 0;
 	}
-
 	if(m_DeferredDomainShader)
 	{
 		m_DeferredDomainShader->Release();
 		m_DeferredDomainShader = 0;
 	}
-	
 }
 
 bool PointLightShader::SetForwardPSLightningParameters(ID3D11DeviceContext* deviceContext, DirectX::FXMVECTOR lightPosition, DirectX::FXMVECTOR lightColor, float lightRange)

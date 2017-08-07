@@ -106,41 +106,12 @@ bool Application::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, in
 		return false;
 	}
 
-	//Create Hemispheric Ambient Light		  dirX, dirY, dirZ, colR, colG, colB, colDX, colDY, coldownZ, colupX, colupY, colupZ
-	
-	//m_LightManager.AddDirectionalLight(0.0, -1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-
-
-	//Create Spot Light			posX,posY,posZ,dirX,dirY,dirZ,colR,colG,colB,ran,innerAngel,outerAngel
 	m_WorldSceneManager.GetLightManager().AddSpotLight(-10.0, 15.0, 10.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 0.15, 0.60);
-	//m_LightManager.AddSpotLight(-7.50, 10.0, 10.0, 0.0, -1.0, 0.0, 1.0, 0.0, 0.0, 20, 0.5, 0.60);
-	//m_LightManager.AddSpotLight(-10.0, 10.0, 15.0, 0.0, -1.0, 0.0, 0.0, 1.0, 0.0, 20, 0.5, 0.60);
-	//m_LightManager.AddSpotLight(-12.5, 10.0, 10.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0, 20, 0.5, 0.60);
-	
-	//Create Point Lights		posX, posY, posZ, colR, colG, colB, range
-	DirectX::XMVECTOR LightPos = DirectX::XMVectorSet(-8.75f, 1.0f, 30.0f, 0.0f);
-	DirectX::XMVECTOR Color = DirectX::XMVectorSet(0.6392f, 0.2862f, 0.6431f, 0.0f);
-	
-	/*
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(-25.5f, 2.0f, 5.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(-15.5f, 2.0f, 5.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(-5.5f, 2.0f, 5.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(5.5f, 2.0f, 5.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(15.5f, 2.0f, 5.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(25.5f, 2.0f, 5.0f, 0.0f), Color, 10);
-	
-	Color = DirectX::XMVectorSet(0.9907f, 0.5803f, 0.1647f, 0.0f);
-
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(-25.5f, 0.0f, 15.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(-15.5f, 0.0f, 15.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(-5.5f, 0.0f, 15.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(5.5f, 0.0f, 15.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(15.5f, 0.0f, 15.0f, 0.0f), Color, 10);
-	m_LightManager.AddPointLight(DirectX::XMVectorSet(25.5f, 0.0f, 15.0f, 0.0f), Color, 10);
-	//Create Capsule Lights		   posX, posY, posZ, colR, colG, colB, dirX, dirY, dirZ, range, length
-	*/
 	//m_WorldSceneManager.GetLightManager().AddCapsuleLight(-7.5, 1.0, 5.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 250, 40);
+	//m_WorldSceneManager.GetLightManager().AddPointLight(DirectX::XMVectorSet(-7.50, 1.0, 10.0, 0.0f), DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f), 100);
+	//m_WorldSceneManager.GetLightManager().AddDirectionalLight(1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 	m_WorldSceneManager.GetLightManager().AddSpotLight(-7.50, 1.0, 10.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 20, 0.5, 0.60);
+	
 	m_WorldSceneManager.GetLightManager().AddImageBasedLight(m_D3D.GetDevice(), "data/IBL_CubeMaps/skymapDiffuseHDR.dds", "data/IBL_CubeMaps/skymapSpecularHDR.dds", "data/IBL_CubeMaps/skymapBrdf.dds", DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f), 0);
 
 	m_UserInterface.AddTextString("Created by Maximilian Winter 2015", "Seogoe UI", 20.0, 1.0f, 1.0f, 1.0f, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 10, screenHeight - 30, 400, 100);
@@ -912,11 +883,11 @@ bool Application::RenderSceneForward()
 	
 	*/
 
-	//m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(0.0f, -100.0f, 0.0, 0.0f), DirectX::XMVectorSet(0.0f, 100.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1.0f, 1.0f);
+	m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(0.0f, -100.0f, 0.0, 0.0f), DirectX::XMVectorSet(0.0f, 100.0f, 0.0f, 0.0f), 0.0f, 0.0f, 1.0f, 1.0f);
 
-	//m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(-100.0f, 0.0f, 0.0, 0.0f), DirectX::XMVectorSet(100.0f, 0.0f, 0.0f, 0.0f), 1.0f, 0.0f, 0.0f, 1.0f);
+	m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(-100.0f, 0.0f, 0.0, 0.0f), DirectX::XMVectorSet(100.0f, 0.0f, 0.0f, 0.0f), 1.0f, 0.0f, 0.0f, 1.0f);
 
-	//m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(0.0f, 0.0f, -100.0, 0.0f), DirectX::XMVectorSet(0.0f, 0.0f, 100.0f, 0.0f), 0.0f, 1.0f, 0.0f, 1.0f);
+	m_ShaderManager.RenderLine(m_D3D.GetDeviceContext(), viewMatrix, projectionMatrix, DirectX::XMVectorSet(0.0f, 0.0f, -100.0, 0.0f), DirectX::XMVectorSet(0.0f, 0.0f, 100.0f, 0.0f), 0.0f, 1.0f, 0.0f, 1.0f);
 
 
 	debugLines.clear();

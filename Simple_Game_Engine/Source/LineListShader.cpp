@@ -48,64 +48,19 @@ void LineListShader::Shutdown()
 bool LineListShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* forwardShaderFilename)
 {
 	HRESULT result;
-	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
 	D3D11_INPUT_ELEMENT_DESC polygonLayout[2];
 	unsigned int numElements;
 	D3D11_BUFFER_DESC vertexBufferDesc;
 
-
-	// Initialize the pointers this function will use to null.
-	errorMessage = 0;
-	vertexShaderBuffer = 0;
-	pixelShaderBuffer = 0;
-
-	// Compile the vertex shader code.
-	result = D3DCompileFromFile(forwardShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "LineVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, forwardShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Compile the pixel shader code.
-	result = D3DCompileFromFile(forwardShaderFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "LinePixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if (FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if (errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, forwardShaderFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the file itself.
-		else
-		{
-			MessageBox(hwnd, forwardShaderFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Create the vertex shader from the buffer.
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_vertexShader);
+	result = ShaderHelper::CreateVertexShader(device, hwnd, forwardShaderFilename, "LineVertexShader", &vertexShaderBuffer, &m_vertexShader);
 	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Create the pixel shader from the buffer.
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_pixelShader);
+	result = ShaderHelper::CreatePixelShader(device, hwnd, forwardShaderFilename, "LinePixelShader", &pixelShaderBuffer, &m_pixelShader);
 	if (FAILED(result))
 	{
 		return false;
@@ -140,14 +95,6 @@ bool LineListShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* fo
 		return false;
 	}
 
-
-	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
-	vertexShaderBuffer->Release();
-	vertexShaderBuffer = 0;
-
-	pixelShaderBuffer->Release();
-	pixelShaderBuffer = 0;
-
 	// Setup the description of the light dynamic constant buffer that is in the pixel shader.
 	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 	vertexBufferDesc.ByteWidth = 2 * sizeof(ColoredPointBufferType);
@@ -162,6 +109,12 @@ bool LineListShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* fo
 	{
 		return false;
 	}
+	
+	vertexShaderBuffer->Release();
+	vertexShaderBuffer = 0;
+
+	pixelShaderBuffer->Release();
+	pixelShaderBuffer = 0;
 	 
 	return true;
 }

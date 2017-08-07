@@ -66,66 +66,21 @@ bool GBufferDebuggingShader::Render(ID3D11DeviceContext* deviceContext, ID3D11Sh
 bool GBufferDebuggingShader::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* hlslFilename)
 {
 	HRESULT result;
-	ID3D10Blob* errorMessage;
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
 
-	// Initialize the pointers this function will use to null.
-	errorMessage = 0;
-	vertexShaderBuffer = 0;
-	pixelShaderBuffer = 0;
-
-	// Compile the vertex shader code.
-	result = D3DCompileFromFile(hlslFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GBufferDebugVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
-	if(FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the shader file itself.
-		else
-		{
-			MessageBox(hwnd, hlslFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Compile the pixel shader code.
-	result = D3DCompileFromFile(hlslFilename, NULL, D3D_COMPILE_STANDARD_FILE_INCLUDE, "GBufferDebugPixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
-	if(FAILED(result))
-	{
-		// If the shader failed to compile it should have writen something to the error message.
-		if(errorMessage)
-		{
-			ShaderHelper::OutputShaderErrorMessage(errorMessage, hwnd, hlslFilename);
-		}
-		// If there was nothing in the error message then it simply could not find the file itself.
-		else
-		{
-			MessageBox(hwnd, hlslFilename, L"Missing Shader File", MB_OK);
-		}
-
-		return false;
-	}
-
-	// Create the vertex shader from the buffer.
-	result = device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_vertexShader);
-	if(FAILED(result))
+	result = ShaderHelper::CreateVertexShader(device, hwnd, hlslFilename, "GBufferDebugVertexShader", &vertexShaderBuffer, &m_vertexShader);
+	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Create the pixel shader from the buffer.
-	result = device->CreatePixelShader(pixelShaderBuffer->GetBufferPointer(), pixelShaderBuffer->GetBufferSize(), NULL, &m_pixelShader);
-	if(FAILED(result))
+	result = ShaderHelper::CreatePixelShader(device, hwnd, hlslFilename, "GBufferDebugPixelShader", &pixelShaderBuffer, &m_pixelShader);
+	if (FAILED(result))
 	{
 		return false;
 	}
 
-	// Release the vertex shader buffer and pixel shader buffer since they are no longer needed.
 	vertexShaderBuffer->Release();
 	vertexShaderBuffer = 0;
 
@@ -138,14 +93,11 @@ bool GBufferDebuggingShader::InitializeShader(ID3D11Device* device, HWND hwnd, W
 
 void GBufferDebuggingShader::ShutdownShader()
 {
-	// Release the pixel shader.
 	if(m_pixelShader)
 	{
 		m_pixelShader->Release();
 		m_pixelShader = 0;
 	}
-
-	// Release the vertex shader.
 	if(m_vertexShader)
 	{
 		m_vertexShader->Release();
