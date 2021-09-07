@@ -12,25 +12,8 @@
 #include "PhysicWorld.h"
 #include "FrustumCulling.h"
 #include "LightManager.h"
+#include "SceneObjectData.h"
 
-
-struct SceneObjectData
-{
-	SceneObjectData()
-	{
-	}
-
-	SceneObjectData(const SceneObjectData& other)
-	{
-		*this = other;
-	}
-
-	VerticesRenderData ObjectRenderData;
-	DirectX::XMFLOAT4X4 WorldMatrix;
-	DirectX::XMFLOAT3 Position;
-	DirectX::XMFLOAT4 QuaternionRotation;
-	DirectX::XMFLOAT3 Scale;
-};
 
 class SceneWorldData
 {

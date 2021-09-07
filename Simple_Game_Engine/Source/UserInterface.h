@@ -201,7 +201,7 @@ public:
 	bool Initialize(D3D*, HWND, HINSTANCE, int, int, DirectX::CXMMATRIX, UserInput*, StateManager*);
 	void Shutdown();
 
-	bool Frame(ID3D11DeviceContext*);
+	bool Frame();
 	bool RenderUI(ID2D1RenderTarget*);
 	bool PrepareDebuginfo();
 	bool RenderMouseCursor(D3D*, bool);

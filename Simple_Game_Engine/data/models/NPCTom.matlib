@@ -1,0 +1,42 @@
+#SMO Converter Material File
+
+[NPCTom00]
+f0 = 0.06
+render_forward = 0
+is_transparent = 0
+use_alphachannel_transparency = 0
+albedo_map = "data/models/defaultAlbedo.dds"
+roughness_map = "data/models/defaultRoughness.dds"
+metalness_map = "data/models/defaultMetalness.dds"
+normal_map = ""
+
+[NPCTom01]
+f0 = 0.06
+render_forward = 0
+is_transparent = 0
+use_alphachannel_transparency = 0
+albedo_map = "E:\GameDevelopment\TFTLOTRS\TFTLOTRS\Assets\AssetPacks\Medieval Weapon Pack - Lowpoly\Textures\Medieval weapon pack_Albedo 1.png"
+roughness_map = "data/models/defaultRoughness.dds"
+metalness_map = "data/models/defaultMetalness.dds"
+normal_map = ""
+
+[NPCTom02]
+f0 = 0.06
+render_forward = 0
+is_transparent = 0
+use_alphachannel_transparency = 0
+albedo_map = "E:\GameDevelopment\TFTLOTRS\TFTLOTRS\Assets\AssetPacks\PolygonFantasyKingdom\Textures\PolygonFantasyKingdom_Texture_01_A.png"
+roughness_map = "data/models/defaultRoughness.dds"
+metalness_map = "data/models/defaultMetalness.dds"
+normal_map = "E:\GameDevelopment\TFTLOTRS\TFTLOTRS\Assets\AssetPacks\PolygonFantasyKingdom\Textures\Misc\PolygonFantasyKingdom_Texture_Normal_01.png"
+
+[NPCTom03]
+f0 = 0.06
+render_forward = 0
+is_transparent = 0
+use_alphachannel_transparency = 0
+albedo_map = "data/models/defaultAlbedo.dds"
+roughness_map = "data/models/defaultRoughness.dds"
+metalness_map = "data/models/defaultMetalness.dds"
+normal_map = ""
+

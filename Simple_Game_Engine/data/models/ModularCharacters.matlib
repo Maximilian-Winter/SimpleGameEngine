@@ -1,0 +1,12 @@
+#SMO Converter Material File
+
+[ModularCharacters00]
+f0 = 0.06
+render_forward = 1
+is_transparent = 0
+use_alphachannel_transparency = 0
+albedo_map = "data/models/PolygonFantasyHero_Texture_01.png"
+roughness_map = "data/models/defaultRoughness.dds"
+metalness_map = "data/models/defaultMetalness.dds"
+normal_map = ""
+

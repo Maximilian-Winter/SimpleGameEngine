@@ -27,8 +27,8 @@ bool MaterialManager::AddMaterialFile(ID3D11Device* device, std::string Material
 	bool result;
 	
 	//Clear the config data object and use it to parse the material file
-	m_MaterialFile.ClearConfigData();
-	result = m_MaterialFile.LoadConfigDataFile(MaterialFilename);
+	m_MaterialFile.ClearDataContainer();
+	result = m_MaterialFile.LoadDataContainerFile(MaterialFilename);
 	if (result)
 	{
 		int NumberOfMaterials = m_MaterialFile.GetNumberOfRootSections();
@@ -246,10 +246,10 @@ SurfaceMaterial MaterialManager::GetMaterial(std::string MaterialName)
 		tempMaterial.RenderForward = it->RenderForward;
 		tempMaterial.IsTransparent = it->IsTransparent;
 		tempMaterial.UseAlphaChannelTransparency = it->UseAlphaChannelTransparency;
-		tempMaterial.HasAlbedoMap = it->HasAlbedoMap;
-		tempMaterial.HasRoughnessMap = it->HasRoughnessMap;
-		tempMaterial.HasMetalnessMap = it->HasMetalnessMap;
-		tempMaterial.HasNormalMap = it->HasNormalMap;
+		tempMaterial.HasAlbedoMap = (tempMaterial.AlbedoMap != nullptr);
+		tempMaterial.HasRoughnessMap = (tempMaterial.RoughnessMap != nullptr);
+		tempMaterial.HasMetalnessMap = (tempMaterial.MetalnessMap != nullptr);
+		tempMaterial.HasNormalMap = (tempMaterial.NormalMap != nullptr);
 
 		return tempMaterial;
 	}

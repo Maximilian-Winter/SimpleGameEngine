@@ -7,7 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include "Texture.h"
-
+#include <string>
 
 class TextureManager
 {

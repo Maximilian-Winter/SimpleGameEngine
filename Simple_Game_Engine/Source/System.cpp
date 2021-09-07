@@ -1,5 +1,7 @@
 #include "System.h"
 
+#include "Logger.h"
+
 
 System::System()
 	:m_UserInputClass(),
@@ -28,7 +30,7 @@ bool System::Initialize()
 	bool result;
 
 	// Load the config file data
-	result = m_ConfigFile.LoadConfigDataFile("main.cfg");
+	result = m_ConfigFile.LoadDataContainerFile("main.cfg");
 
 	if (result)
 	{
@@ -81,6 +83,7 @@ bool System::Initialize()
 
 void System::Shutdown()
 {
+	Logger::GetInstance()->SaveLog();
 	//Shutdown the application
 	m_Application.Shutdown();
 	// Shutdown the window.

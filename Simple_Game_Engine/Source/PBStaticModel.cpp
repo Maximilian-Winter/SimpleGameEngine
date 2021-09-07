@@ -249,9 +249,9 @@ bool PBStaticModel::LoadModel(ID3D11Device* d3d11Device, std::string filename, M
 
 	m_MeshFilename = filename;
 
-	ConfigData MeshInputFile;
+	DataFileContainer MeshInputFile;
 
-	result = MeshInputFile.LoadConfigDataFile(filename);
+	result = MeshInputFile.LoadDataContainerFile(filename);
 	if (!result)
 	{
 		return false;

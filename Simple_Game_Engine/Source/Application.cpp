@@ -2,14 +2,14 @@
 
 
 Application::Application()
-:m_D3D(), 
-m_Camera(), 
-m_Timer(), 
-m_DeferredBuffers(), 
-m_UserInterface(), 
-m_ShaderManager(),
-m_StateManager(),
-m_WorldSceneManager()
+	: m_D3D(),
+	  m_Camera(),
+	  m_Timer(),
+	  m_DeferredBuffers(),
+	  m_UserInterface(),
+	  m_ShaderManager(),
+	  m_StateManager(),
+	  m_WorldSceneManager(), m_SceneGraph(Transform(), "World"), m_AdditiveBlendingIsOn(false)
 {
 	//m_RenderQueue.clear();
 	m_MoveLeftRight = 0;
@@ -30,12 +30,8 @@ m_WorldSceneManager()
 	m_SpeedFactor = 0;
 
 	m_DetectInputLastFrame = false;
-
 }
 
-Application::Application(const Application& other)
-{
-}
 
 Application::~Application()
 {
@@ -63,7 +59,7 @@ bool Application::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, in
 		return false;
 	}
 
-	result = m_MaterialManager.Initialize(m_D3D.GetDevice(), &m_TextureManager);
+	result = MaterialManager::GetInstance()->Initialize(m_D3D.GetDevice(), &m_TextureManager);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the material manager object.", L"Error", MB_OK);
@@ -100,11 +96,13 @@ bool Application::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, in
 	}
 
 	//Load scene from file.
-	result = m_WorldSceneManager.LoadSceneFile(m_D3D.GetDevice(), &m_MaterialManager, "data/Scene.gsce");
+	/*result = m_WorldSceneManager.LoadSceneFile(m_D3D.GetDevice(), MaterialManager::GetInstance(), "data/Scene.gsce");
 	if (!result)
 	{
 		return false;
-	}
+	}*/
+
+	m_StaticModel.LoadModel(m_D3D.GetDevice(), m_SceneGraph, "ModularCharacters.smo");
 
 	m_WorldSceneManager.GetLightManager().AddSpotLight(-10.0, 15.0, 10.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0, 0.15, 0.60);
 	//m_WorldSceneManager.GetLightManager().AddCapsuleLight(-7.5, 1.0, 5.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 250, 40);
@@ -163,7 +161,7 @@ bool Application::UpdateApplication()
 	m_Timer.Frame();
 
 	// Update UserInterface e.g.: Upadte Input, Timers , mouse coords 
-	result = m_UserInterface.Frame(m_D3D.GetDeviceContext());
+	result = m_UserInterface.Frame();
 	if (!result)
 	{
 		return false;
@@ -250,7 +248,7 @@ bool Application::UpdateWorld()
 			DirectX::XMVECTOR Scale = DirectX::XMVectorSet(1.0f, 1.0f, 1.0f, 0.0f);
 
 			std::string name = "Ball";
-			result = m_WorldSceneManager.AddObjectToScene(m_D3D.GetDevice(), &m_MaterialManager, SceneWorldData::StaticObject, SceneWorldData::CullSphere, SceneWorldData::CollisionSphere, "data/models/ball.smo", name, Position, Rotation, Scale, 1.0f);
+			result = m_WorldSceneManager.AddObjectToScene(m_D3D.GetDevice(), MaterialManager::GetInstance(), SceneWorldData::StaticObject, SceneWorldData::CullSphere, SceneWorldData::CollisionSphere, "data/models/ball.smo", name, Position, Rotation, Scale, 1.0f);
 			if (!result)
 			{
 				return false;
@@ -402,7 +400,7 @@ bool Application::Render()
 	m_Camera.Render();
 
 	//Prepare world scene data for rendering
-	m_WorldSceneManager.PrepareFrameRenderData(&m_MaterialManager, SCREEN_DEPTH, m_Camera.GetPosition(), m_Camera.GetViewMatrix(), m_D3D.GetProjectionMatrix());
+	m_WorldSceneManager.PrepareFrameRenderData(MaterialManager::GetInstance(), SCREEN_DEPTH, m_Camera.GetPosition(), m_Camera.GetViewMatrix(), m_D3D.GetProjectionMatrix());
 
 	// Render the scene to the render buffers.
 	result = RenderSceneDeferred();
@@ -654,6 +652,10 @@ bool Application::RenderSceneForward()
 	m_ShaderManager.RenderSkyboxShader(m_D3D.GetDeviceContext(), m_Camera.GetViewMatrix(), m_D3D.GetProjectionMatrix(), m_Camera.GetPosition());
 	m_D3D.TurnOnBackFaceCWCulling();
 
+	std::vector<SceneObjectData> meshesToRender;
+	m_SceneGraph.Update(meshesToRender);
+
+
 	//Get forward render data
 	std::vector<SceneObjectData>& ForwardRenderData = m_WorldSceneManager.GetForwardFrameRenderData();
 
@@ -752,6 +754,109 @@ bool Application::RenderSceneForward()
 				AdditiveBlendingIsOn = true;
 			}
 			
+		}
+
+		if (AdditiveBlendingIsOn == true)
+		{
+			m_D3D.TurnAdditiveAlphaBlendingOff();
+			AdditiveBlendingIsOn = false;
+		}
+	}
+
+	for (int ObjIndex = 0; ObjIndex < meshesToRender.size(); ObjIndex++)
+	{
+		SceneObjectData ObjectData = meshesToRender[ObjIndex];
+
+		//Render all directional lights.
+		std::vector<DirectionalLightData>& DirectionalLights = m_WorldSceneManager.GetFrameDirectionalLightData();
+		for (auto DirectionalLight : DirectionalLights)
+		{
+			result = m_ShaderManager.RenderForwardDirectionalLightShader(m_D3D.GetDeviceContext(), ObjectData, viewMatrix, projectionMatrix, m_Camera.GetPosition(), DirectionalLight);
+
+			if (!result)
+			{
+				return false;
+			}
+
+			if (AdditiveBlendingIsOn == false)
+			{
+				m_D3D.TurnAdditiveAlphaBlendingOn();
+				AdditiveBlendingIsOn = true;
+			}
+		}
+
+		//Render all point lights.
+		std::vector<PointLightData>& PointLights = m_WorldSceneManager.GetFramePointLightData();
+		for (auto PointLight : PointLights)
+		{
+			result = m_ShaderManager.RenderForwardPointLightShader(m_D3D.GetDeviceContext(), ObjectData, viewMatrix, projectionMatrix, m_Camera.GetPosition(), PointLight);
+
+			if (!result)
+			{
+				return false;
+			}
+
+			if (AdditiveBlendingIsOn == false)
+			{
+				m_D3D.TurnAdditiveAlphaBlendingOn();
+				AdditiveBlendingIsOn = true;
+			}
+		}
+
+		//Render All Spot Lights
+		std::vector<SpotLightData>& SpotLights = m_WorldSceneManager.GetFrameSpotLightData();
+		for (auto SpotLight : SpotLights)
+		{
+
+			result = m_ShaderManager.RenderForwardSpotLightShader(m_D3D.GetDeviceContext(), ObjectData, viewMatrix, projectionMatrix, m_Camera.GetPosition(), SpotLight);
+
+			if (!result)
+			{
+				return false;
+			}
+
+			if (AdditiveBlendingIsOn == false)
+			{
+				m_D3D.TurnAdditiveAlphaBlendingOn();
+				AdditiveBlendingIsOn = true;
+			}
+		}
+
+		//Render all capsule lights.
+		std::vector<CapsuleLightData>& CapsuleLights = m_WorldSceneManager.GetFrameCapsuleLightData();
+		for (auto CapsuleLight : CapsuleLights)
+		{
+
+			result = m_ShaderManager.RenderForwardCapsuleLightShader(m_D3D.GetDeviceContext(), ObjectData, viewMatrix, projectionMatrix, m_Camera.GetPosition(), CapsuleLight);
+			if (!result)
+			{
+				return false;
+			}
+
+			if (AdditiveBlendingIsOn == false)
+			{
+				m_D3D.TurnAdditiveAlphaBlendingOn();
+				AdditiveBlendingIsOn = true;
+			}
+		}
+
+		//Render All Image Based Lights
+		std::vector<ImageBasedLightData>& ImageBasedLights = m_WorldSceneManager.GetFrameImageBasedLightData();
+		for (auto ImageBasedLight : ImageBasedLights)
+		{
+
+			result = m_ShaderManager.RenderForwardIBLShader(m_D3D.GetDeviceContext(), ObjectData, viewMatrix, projectionMatrix, m_Camera.GetPosition(), ImageBasedLight);
+			if (!result)
+			{
+				return false;
+			}
+
+			if (AdditiveBlendingIsOn == false)
+			{
+				m_D3D.TurnAdditiveAlphaBlendingOn();
+				AdditiveBlendingIsOn = true;
+			}
+
 		}
 
 		if (AdditiveBlendingIsOn == true)

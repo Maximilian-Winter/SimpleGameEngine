@@ -2,6 +2,7 @@
 // Class to init DirectX and handle the application data( eg: the Scene Data, the Renderer and the UI)
 #ifndef _APPLICATION_H_
 #define _APPLICATION_H_
+#include "StaticModel.h"
 
 // Globals 
 const float SCREEN_DEPTH = 1000.0f;
@@ -34,7 +35,6 @@ class Application
 {
 public:
 	Application();
-	Application(const Application&);
 	~Application();
 
 	bool Initialize(HINSTANCE, HWND, int, int, bool, bool, UserInput*, StateManager*);
@@ -62,8 +62,9 @@ private:
 	ShaderManager m_ShaderManager;
 	StateManager* m_StateManager;
 	SceneWorldData m_WorldSceneManager;
-	MaterialManager m_MaterialManager;
 	TextureManager m_TextureManager;
+	SceneGraph m_SceneGraph;
+	StaticModel m_StaticModel;
 
 	float  m_MoveLeftRight;
 	float m_MoveBackForward;

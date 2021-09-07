@@ -8,33 +8,15 @@
 #include <DirectXMath.h>
 #include <vector>
 #include "TextureManager.h"
-#include "ConfigData.h"
+#include "DataFileContainer.h"
+#include "Singleton.h"
+#include "ModelTypes.h"
 
 
 
-struct SurfaceMaterial
+class MaterialManager : public Singleton<MaterialManager>
 {
-	ID3D11ShaderResourceView* AlbedoMap;
-	ID3D11ShaderResourceView* RoughnessMap;
-	ID3D11ShaderResourceView* MetalnessMap;
-	ID3D11ShaderResourceView* NormalMap;
-	DirectX::XMFLOAT3 Albedo;
-	float Roughness;
-	float Metalness;
-	float F0;
-	float Transparency;
-	bool RenderForward;
-	bool IsTransparent;
-	bool UseAlphaChannelTransparency;
-	bool HasAlbedoMap;
-	bool HasRoughnessMap;
-	bool HasMetalnessMap;
-	bool HasNormalMap;
-};
-
-
-class MaterialManager
-{
+	friend class Singleton<MaterialManager>;
 private:
 	struct SurfaceMaterialData
 	{
@@ -97,7 +79,7 @@ public:
 
 private:
 
-	ConfigData m_MaterialFile;
+	DataFileContainer m_MaterialFile;
 	std::vector<SurfaceMaterialData> m_Materials;
 	TextureManager* m_TextureManager;
 	

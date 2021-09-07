@@ -131,6 +131,7 @@ Date: 01.12.2014
 #ifndef _SYSTEM_H_
 #define _SYSTEM_H_
 
+
 // Pre-Processing Directives 
 #define WIN32_LEAN_AND_MEAN
 
@@ -140,9 +141,10 @@ Date: 01.12.2014
 #include <windowsx.h>
 
 #include "Application.h"
-#include "ConfigData.h"
+#include "DataFileContainer.h"
 #include "UserInput.h"
 #include "StateManager.h"
+
 
 
 // Class name: System
@@ -173,7 +175,7 @@ private:
 	Application m_Application;
 	UserInput m_UserInputClass;
 	StateManager m_StateManager;
-	ConfigData m_ConfigFile;
+	DataFileContainer m_ConfigFile;
 
 	int m_ScreenWidth, m_ScreenHeight;
 	int m_mouseX, m_mouseY;

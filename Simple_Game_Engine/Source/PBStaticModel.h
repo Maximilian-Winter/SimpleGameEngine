@@ -12,19 +12,8 @@
 #include <vector>
 #include <sstream>
 #include "MaterialManager.h"
+#include "ModelTypes.h"
 
-
-//Structure to transfer the data to the render class.
-struct VerticesRenderData
-{
-	SurfaceMaterial Material;
-	int start;
-	int drawAmount;
-	ID3D11Buffer* VertexBuffer;
-	ID3D11Buffer* IndexBuffer;
-	UINT VertexBufferStride;
-	UINT VertexBufferOffset;
-};
 
 // Class name: PBStaticModel
 

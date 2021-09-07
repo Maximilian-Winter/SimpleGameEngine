@@ -1,0 +1,12 @@
+#Material Library
+
+[NoMaterialName00]
+f0 = 0.060000
+render_forward = 0
+is_transparent = 0
+use_alphachannel_transparency = 0
+albedo_map = "data/models/PolygonFantasyHero_Texture_01.dds"
+roughness_map = "data/models/defaultRoughness.dds"
+metalness_map = "data/models/defaultMetalness.dds"
+normal_map = ""
+

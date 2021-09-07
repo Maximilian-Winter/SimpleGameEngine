@@ -262,7 +262,7 @@ bool SceneWorldData::LoadSceneFile(ID3D11Device * device, MaterialManager * mate
 {
 	bool result;
 
-	ConfigData objectDescFile;
+	DataFileContainer objectDescFile;
 	
 	SceneObjectType objectType = StaticObject;
 	CullingVolumeType cullingVolumeType = CullPoint;
@@ -276,8 +276,8 @@ bool SceneWorldData::LoadSceneFile(ID3D11Device * device, MaterialManager * mate
 	float mass = 0.0f;
 
 	//Clear the config data object and use it to parse the material file
-	objectDescFile.ClearConfigData();
-	result = objectDescFile.LoadConfigDataFile(objectDescriptionFilename);
+	objectDescFile.ClearDataContainer();
+	result = objectDescFile.LoadDataContainerFile(objectDescriptionFilename);
 	if (result)
 	{
 		int numberOfSections = objectDescFile.GetNumberOfRootSections();
@@ -469,7 +469,7 @@ bool SceneWorldData::LoadSceneFile(ID3D11Device * device, MaterialManager * mate
 		}
 		else
 		{
-			return false;
+			return true;
 		}
 	}
 	else

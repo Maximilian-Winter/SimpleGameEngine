@@ -39,6 +39,7 @@ bool UserInterface::Initialize(D3D* m_D3D, HWND hwnd, HINSTANCE hinstance, int s
 		return false;
 	}
 
+	m_Timer.Initialize();
 	// Initialize the fps object.
 	m_Fps.Initialize();
 
@@ -79,7 +80,7 @@ void UserInterface::Shutdown()
 	return;
 }
 
-bool UserInterface::Frame(ID3D11DeviceContext* deviceContext)
+bool UserInterface::Frame()
 {
 	bool result;
 
@@ -255,7 +256,7 @@ bool UserInterface::PrepareDebuginfo()
 	}
 	else
 	{
-		tempString = std::to_string(1000 / m_LastFrameDuration);
+		tempString = std::to_string(m_Fps.GetFps());
 	}
 	fpsString += tempString;
 	AddTemporaryTextString(fpsString, "Seogoe UI", 20.0f, 1.0f, 1.0f, 1.0f, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 10, 40, 350, 40);

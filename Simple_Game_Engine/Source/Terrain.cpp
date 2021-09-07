@@ -36,9 +36,9 @@ bool Terrain::Initialize(ID3D11Device* device, MaterialManager* MatManager, std:
 	std::string MaterialFilename;
 	std::string heightMapFilename;
 
-	ConfigData TerrainFile;
+	DataFileContainer TerrainFile;
 
-	result = TerrainFile.LoadConfigDataFile(filename);
+	result = TerrainFile.LoadDataContainerFile(filename);
 	if (!result)
 	{
 		return false;
